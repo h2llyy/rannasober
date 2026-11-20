@@ -2,143 +2,292 @@
 <html lang="et">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#96dedf">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7fd3dc">
 <title>Rannasõbra aardesaar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink:#173f4c; --edge:#ba9871; --cream:#fff8e6;
-  --sea:#138485; --gold:#ffe38a;
+:root{
+  --ink:#123c4a; --ink2:#2c6170; --edge:#c49a62; --cream:#fff9ea;
+  --sea:#0f8f96; --coral:#ff7b6b; --sun:#ffd25e; --leaf:#45b37a;
+  --font:'Baloo 2',ui-rounded,'Segoe UI Rounded','Trebuchet MS',system-ui,sans-serif;
 }
-* { box-sizing:border-box }
-body {
-  margin:0; min-height:100vh; min-height:100dvh;
-  font:650 17px/1.35 system-ui,sans-serif; color:var(--ink);
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent}
+body{
+  margin:0; min-height:100vh; min-height:100dvh; overflow-x:hidden;
+  font:600 18px/1.35 var(--font); color:var(--ink);
   background:#bde9e6; isolation:isolate;
 }
-button,select { font:inherit; color:inherit }
-button {
-  background:linear-gradient(155deg,#fffefa,#ffefc9);
-  border:2px solid #47716d; border-radius:17px;
+button,select{font:inherit;color:inherit}
+button{
+  background:linear-gradient(160deg,#fffefa,#ffefc9);
+  border:2px solid #47716d; border-radius:18px;
   min-height:48px; padding:8px 14px; cursor:pointer;
-  box-shadow:inset 0 3px 1px #fffd,0 5px 0 var(--edge),0 8px 15px #19465424;
-  touch-action:manipulation; transition:transform .13s,box-shadow .13s;
+  box-shadow:inset 0 3px 1px #fffd,0 5px 0 var(--edge),0 9px 16px #19465426;
+  touch-action:manipulation; transition:transform .15s,box-shadow .15s,filter .15s;
 }
-button:active:not(:disabled) {
-  transform:translateY(4px) scale(.97);
-  box-shadow:inset 0 2px 3px #896c4433,0 1px 0 var(--edge);
+@media(hover:hover){button:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.04)}}
+button:active:not(:disabled){transform:translateY(4px) scale(.97);box-shadow:inset 0 2px 3px #896c4433,0 1px 0 var(--edge)}
+button:focus-visible{outline:4px solid #ad5418;outline-offset:3px}
+button:disabled{cursor:default}
+main{width:min(94%,960px);margin:auto;padding:12px 0 120px;text-align:center}
+h1,h2{margin:.2em 0;line-height:1.05;text-wrap:balance;font-weight:800}
+h2{font-size:clamp(28px,4.6vw,44px);color:#0f4a57;text-shadow:0 3px 0 #ffffffaa}
+p{margin:.4em 0}
+.row,.tools,.slots{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px}
+.small{font-size:16px;padding:6px 12px;min-height:44px}
+
+/* ---------- Taust ---------- */
+.seascape{position:fixed;inset:0;overflow:hidden;z-index:-1;pointer-events:none;
+  background:linear-gradient(#8fd8ec 0%,#d9f5f0 52%,#7dd3d0 52.2%,#2aa3ad 78%,#f3d8a2 78.3%,#fff1cb 100%);
+  transition:filter 1s}
+.sun{position:absolute;right:9%;top:7%;width:14vmin;height:14vmin;border-radius:50%;
+  background:radial-gradient(circle,#fff7c2 0 45%,#ffd864 70%);box-shadow:0 0 50px 18px #ffe9864d;transition:all 1s}
+.sun::before{content:'';position:absolute;inset:-60%;border-radius:50%;
+  background:repeating-conic-gradient(#fff3a855 0 8deg,transparent 8deg 22deg);
+  mask:radial-gradient(circle,transparent 30%,#000 32%,transparent 70%);
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 32%,transparent 70%);
+  animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.cloud{position:absolute;font-size:clamp(40px,7vw,90px);opacity:.85;filter:drop-shadow(0 6px 6px #ffffff88)}
+.cloud.c1{left:4%;top:7%;animation:drift 26s ease-in-out infinite alternate}
+.cloud.c2{left:38%;top:16%;font-size:clamp(28px,4.5vw,60px);opacity:.65;animation:drift 34s ease-in-out infinite alternate-reverse}
+.cloud.c3{left:62%;top:4%;font-size:clamp(24px,3.5vw,48px);opacity:.55;animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(12vw)}}
+.bird{position:absolute;top:22%;left:-8%;width:34px;animation:fly 28s linear infinite}
+.bird.b2{top:27%;width:24px;animation-duration:36s;animation-delay:-14s}
+@keyframes fly{to{transform:translateX(118vw) translateY(-6vh)}}
+.bird path{animation:flap .5s ease-in-out infinite alternate;transform-origin:center}
+@keyframes flap{to{transform:scaleY(.4)}}
+.boat{position:absolute;top:46%;left:-10%;font-size:clamp(30px,5vw,54px);animation:sail 60s linear infinite}
+@keyframes sail{0%{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(60vw) rotate(3deg)}100%{transform:translateX(125vw) rotate(-3deg)}}
+.wave{position:absolute;left:-25%;width:150%;height:13%}
+.wave.one{top:55%;color:#9de6e0;animation:swell 8s ease-in-out infinite alternate}
+.wave.two{top:63%;color:#55c1c4;animation:swell 6s ease-in-out infinite alternate-reverse}
+.wave.three{top:71%;color:#c9f2ea;animation:swell 7s ease-in-out infinite alternate}
+@keyframes swell{to{transform:translate(8%,7px)}}
+.shell{position:absolute;font-size:clamp(20px,3vw,32px);bottom:5%}
+.bubble-bg{position:absolute;bottom:20%;width:12px;height:12px;border-radius:50%;border:2px solid #ffffffaa;
+  background:radial-gradient(circle at 30% 30%,#fff9,transparent 60%);animation:rise 9s ease-in infinite;opacity:0}
+@keyframes rise{0%{transform:translateY(0);opacity:0}15%{opacity:.9}100%{transform:translateY(-34vh) translateX(20px);opacity:0}}
+.stars{position:absolute;inset:0 0 50%;opacity:0;transition:opacity 1s;
+  background-image:radial-gradient(2px 2px at 10% 20%,#fff,transparent),radial-gradient(2px 2px at 30% 10%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 50% 30%,#fff,transparent),radial-gradient(2px 2px at 70% 15%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 85% 35%,#fff,transparent),radial-gradient(2px 2px at 20% 40%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 60% 45%,#fff,transparent),radial-gradient(2px 2px at 92% 8%,#fff,transparent);
+  animation:twinkle 3s ease-in-out infinite alternate}
+@keyframes twinkle{to{filter:brightness(.5)}}
+body.night .seascape{background:linear-gradient(#0d2347 0%,#2b4f84 52%,#1f6f8a 52.2%,#0f3e5c 78%,#8f8a7a 78.3%,#b6aa8c 100%)}
+body.night .stars{opacity:1}
+body.night .sun{background:radial-gradient(circle at 35% 35%,#fffbe8 0 55%,#e8e2c0 70%);box-shadow:0 0 40px 12px #fffbe233}
+body.night .sun::before{opacity:0}
+body.night .cloud{opacity:.35}
+body.night .wave.one{color:#2c7f99}body.night .wave.two{color:#1d5f7c}body.night .wave.three{color:#3a8ca0}
+
+/* ---------- Krabi ja hüljes ---------- */
+#beachCrab{position:fixed;z-index:3;bottom:6px;left:1%;min-width:54px;background:none;border:0;box-shadow:none;padding:0;
+  font-size:38px;filter:drop-shadow(0 3px 2px #62432155);animation:scuttle 23s ease-in-out infinite alternate}
+@keyframes scuttle{0%,8%{left:1%}43%,49%{left:39%}92%,100%{left:calc(80% - 55px)}}
+#beachCrab span{display:block}
+#beachCrab.dance span{animation:dance .48s ease-in-out 2}
+@keyframes dance{30%{transform:translateY(-14px) rotate(14deg)}65%{transform:rotate(-14deg)}}
+.buddy{position:fixed;z-index:5;right:max(10px,env(safe-area-inset-right));bottom:8px;background:none;border:0;box-shadow:none;padding:0;min-height:0}
+.buddy .seal{display:block;font-size:clamp(46px,8vmin,70px);filter:drop-shadow(0 5px 3px #1e4a5644);animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.buddy .say{position:absolute;right:62%;bottom:88%;width:max-content;max-width:min(60vw,240px);background:#fff;color:var(--ink);
+  border:3px solid #0f8f96;border-radius:18px 18px 4px 18px;padding:6px 12px;font-size:17px;font-weight:700;line-height:1.2;
+  box-shadow:0 6px 14px #0f3e4a33;opacity:0;transform:scale(.4) translateY(14px);transform-origin:100% 100%;transition:.25s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.buddy.talk .say{opacity:1;transform:none}
+.buddy.happy .seal{animation:hop .5s ease-out 2}
+.buddy.think .seal{animation:tilt .6s ease-in-out 2}
+@keyframes hop{40%{transform:translateY(-22px) rotate(8deg) scale(1.08)}}
+@keyframes tilt{30%{transform:rotate(-14deg)}70%{transform:rotate(10deg)}}
+
+/* ---------- Päis ja kiibid ---------- */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fffdf3;border:2px solid #e2c27c;border-radius:999px;
+  padding:4px 14px;font-weight:800;font-size:20px;box-shadow:0 4px 0 #d6b46b88}
+.chip b{display:inline-block;min-width:1.3em}
+.chip.bump b{animation:bump .35s}
+@keyframes bump{50%{transform:scale(1.5);color:#d36a00}}
+.progress{flex:1;min-width:140px;max-width:340px;position:relative;height:30px;border-radius:999px;background:#ffffffb0;border:2px solid #9cc9c3;overflow:hidden}
+.progress .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#5fd3c4,#3bb0c9);border-radius:999px;transition:width .6s cubic-bezier(.3,1.4,.5,1)}
+.progress span{position:relative;font-weight:800;font-size:16px;line-height:26px}
+.streak{font-size:15px;color:#c0471a;font-weight:800;min-height:1.2em}
+
+/* ---------- Avaleht ---------- */
+.hero{font-size:clamp(60px,11vmin,100px);line-height:1;filter:drop-shadow(0 8px 4px #416e7133);animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(2deg)}}
+.title{font-size:clamp(38px,7.4vw,74px);color:#0d4f5c;letter-spacing:.5px}
+.title .word{display:inline-block;white-space:nowrap;animation:none;text-shadow:none}
+.title .word span{display:inline-block;animation:wave 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*.07s);
+  text-shadow:0 3px 0 #fff,0 6px 0 #00000014}
+@keyframes wave{0%,60%,100%{transform:none}30%{transform:translateY(-9px)}}
+.tag{font-size:clamp(17px,2.3vw,21px);color:var(--ink2)}
+.seg{display:inline-flex;background:#ffffffb5;border:2px solid #9cc9c3;border-radius:999px;padding:3px;gap:3px}
+.seg button{min-height:38px;padding:2px 16px;border:0;box-shadow:none;background:none;border-radius:999px}
+.seg button[aria-pressed="true"]{background:#0f8f96;color:#fff}
+.menu{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:18px auto}
+.menu button{--c:#4cc3d9;position:relative;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  font-size:clamp(15px,1.9vw,18px);font-weight:800;line-height:1.1;padding:10px 6px;border:3px solid var(--c);border-radius:24px;
+  background:#fff;background:linear-gradient(170deg,#fff 40%,color-mix(in srgb,var(--c) 28%,#fff));
+  box-shadow:inset 0 3px #fff,0 6px 0 var(--c),0 12px 18px #19465430;animation:popIn .5s backwards;animation-delay:calc(var(--d)*60ms)}
+.menu .icon{display:block;font-size:clamp(36px,6vmin,54px);filter:drop-shadow(0 4px 2px #604d3133);transition:transform .3s}
+@media(hover:hover){.menu button:hover .icon{transform:scale(1.18) rotate(-8deg)}}
+.menu .medal{position:absolute;top:-10px;right:-6px;background:var(--sun);border:2px solid #c99a26;border-radius:999px;padding:0 7px;font-size:13px;line-height:22px}
+@keyframes popIn{from{opacity:0;transform:scale(.6) translateY(20px)}}
+
+/* ---------- Mänguala ---------- */
+.panel{position:relative;background:linear-gradient(150deg,#fffdf6f7,#fff4ddf2);border:3px solid #ffffffcc;
+  box-shadow:inset 0 3px #fff,0 8px 0 #c6b39280,0 18px 30px #29565b2e;border-radius:30px;padding:clamp(14px,2.6vw,28px);margin:12px auto;animation:popIn .4s}
+.stage{display:grid;gap:clamp(8px,2vh,18px);justify-items:center}
+.sample{font-size:clamp(56px,12vmin,100px);line-height:1.12;animation:float 3s ease-in-out infinite}
+.sample.letter{font-weight:800;color:#0f6b74;text-shadow:0 5px 0 #0f6b7422}
+.card{min-width:clamp(70px,14vw,124px);min-height:clamp(70px,14vw,110px);font-size:clamp(36px,7.5vmin,62px);font-weight:800;padding:5px 12px;
+  animation:popIn .4s backwards;animation-delay:calc(var(--d,0)*80ms)}
+.tile{min-width:52px;font-size:clamp(26px,5vmin,40px);font-weight:800;padding:4px 12px;background:linear-gradient(160deg,#fff,#ffe6a8);animation:popIn .4s backwards;animation-delay:calc(var(--d,0)*50ms)}
+.slot{display:inline-grid;place-items:center;min-width:clamp(32px,6vw,52px);height:clamp(44px,8vw,64px);font-size:clamp(22px,4.5vw,38px);font-weight:800;
+  border-radius:12px;background:#ffffff90;border:2px dashed #aeb8a6;color:#b8c4bd}
+.slot.next{background:#ffe9ac;border:3px solid #e08a2e;color:#c58b4b;animation:pulse 1.2s infinite}
+.slot.filled{background:#d9f3c9;border:3px solid #4c9966;color:#1d5a3a;animation:pop .35s}
+@keyframes pulse{50%{box-shadow:0 0 0 6px #ffd27a66}}
+@keyframes pop{50%{transform:scale(1.25)}}
+.used{visibility:hidden}
+.ok,.found,.lit{background:linear-gradient(#fbffcd,#9fe3aa)!important;border-color:#2f8a52!important}
+.ok{animation:pop .4s}
+.lit{outline:6px solid #ffb627;transform:translateY(-6px) scale(1.08)}
+.glow{animation:glow 1s ease-in-out infinite!important;border-color:#e08a2e!important}
+@keyframes glow{50%{box-shadow:0 0 0 8px #ffcc5588,0 0 26px 8px #ffd56b;transform:scale(1.06)}}
+#status{min-height:1.5em;color:#1f6155;font-weight:700;font-size:19px}
+.shake{animation:shake .4s ease-in-out}
+@keyframes shake{20%{transform:translateX(-8px) rotate(-4deg)}40%{transform:translateX(7px) rotate(3deg)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.pair{display:flex;width:100%;justify-content:center;gap:12px}
+.picture,.board{display:grid;grid-template-columns:repeat(2,1fr);overflow:hidden;border:4px solid #698b7e;border-radius:18px;background:#fff}
+.picture{width:min(45%,240px);cursor:zoom-in}
+.spot{min-width:0;aspect-ratio:1.25;border:1px solid #d5dfc9;border-radius:0;box-shadow:none;padding:0;font-size:clamp(30px,6.5vmin,54px);background:linear-gradient(#f2fbff,#e3f5ef)}
+.spot.found{animation:ring .6s}
+@keyframes ring{0%{box-shadow:inset 0 0 0 0 #ff7b6b}50%{box-shadow:inset 0 0 0 8px #ff7b6b}}
+.board{width:min(60vw,34vh,250px);aspect-ratio:1}
+.board.done{animation:pop .6s;border-color:#3e9b62}
+.cell{min-width:0;min-height:0;background:white;border:1px dashed #9aa799;transition:background .2s}
+.cell svg{opacity:.18}
+.cell.active{outline:4px dashed #e08a2e;outline-offset:-6px;background:#fff6dc}
+.cell.over{background:#ffe9ac}
+.cell.placed svg{opacity:1;animation:pop .35s}
+.piece{width:clamp(60px,16vw,92px);aspect-ratio:1;padding:0;overflow:hidden;touch-action:none}
+.cell svg,.piece svg{width:100%;height:100%;display:block;pointer-events:none}
+.ghost{position:fixed;z-index:20;pointer-events:none;width:90px;height:90px;border-radius:14px;overflow:hidden;border:3px solid #e08a2e;
+  box-shadow:0 14px 26px #0004;transform:translate(-50%,-50%) rotate(-6deg) scale(1.08)}
+.ghost svg{width:100%;height:100%;display:block}
+.pond{position:relative;display:flex;align-items:center;width:min(100%,560px);justify-content:center;gap:6px;
+  background:radial-gradient(ellipse at 50% 30%,#bdeef0,#7fcfd6);padding:38px 8px 16px;border-radius:30px;border:3px solid #5fb2b8}
+.bank{font-size:32px;flex:0 0 auto}
+.pad{position:relative;flex:1;max-width:78px;aspect-ratio:1;padding:0;border-radius:50% 50% 50% 8%;font-weight:800;font-size:22px;
+  background:radial-gradient(circle at 40% 35%,#dff7a0,#7cc46f);border-color:#3f8a4a;box-shadow:0 4px 0 #3d7f49,0 8px 12px #0003}
+.pad.done{filter:saturate(1.4) brightness(1.05)}
+.goal{position:absolute;top:-14px;right:-6px;font-size:22px}
+.frog{position:absolute;top:-2px;left:0;font-size:34px;transform:translateX(-50%);transition:left .38s ease-in-out;pointer-events:none;z-index:2}
+.frog.jump{animation:frogJump .38s ease-in-out}
+@keyframes frogJump{50%{transform:translate(-50%,-34px) scale(1.15)}}
+.drops{font-size:24px;letter-spacing:4px}
+.drops span{transition:opacity .3s,transform .3s}
+.drops span.off{opacity:.2;transform:scale(.6)}
+.map,.movie{width:min(100%,700px);border-radius:22px;overflow:hidden;border:4px solid #578c89;background:#b9e8e4}
+.map{display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.movie{position:relative;aspect-ratio:2.2;min-height:150px;background:linear-gradient(#a7dfec,#ecf9e9 55%,#86d5ce 56%,#3a99aa)}
+.movie .land{position:absolute;bottom:15%;right:7%;font-size:clamp(50px,9vw,100px);filter:drop-shadow(0 6px 2px #365b5c55);animation:float 3s ease-in-out infinite}
+.movie .actor{position:absolute;bottom:12%;left:5%;font-size:clamp(40px,7vw,76px)}
+.movie.play .actor{animation:voyage 2.8s ease-in-out forwards}
+@keyframes voyage{0%{left:5%;transform:rotate(-7deg)}40%{transform:translateY(-10px) rotate(4deg)}100%{left:55%;transform:rotate(-3deg)}}
+.movie .sky{position:absolute;top:6%;left:9%;font-size:clamp(28px,6vw,50px)}
+.movie .mwave{position:absolute;left:-10%;width:120%;bottom:0;height:30%;color:#ffffff40;animation:swell 4s ease-in-out infinite alternate}
+.movie .clap{position:absolute;top:6%;right:4%;font-size:26px;opacity:.85}
+.storybtn{min-width:120px;animation:popIn .4s backwards}
+.storybtn span{display:block;font-size:38px}
+.swatch{min-width:50px;font-size:22px}
+.swatch[aria-pressed="true"]{outline:4px solid #396b70;outline-offset:2px}
+#caption{font-size:20px;min-height:2.4em}
+
+/* ---------- Aardelaegas ---------- */
+.rating{font-size:clamp(40px,8vw,64px);letter-spacing:6px;min-height:1.2em}
+.rating span{display:inline-block;animation:pop .5s backwards}
+.chestwrap{position:relative;width:220px;height:200px;display:grid;place-items:end center}
+.chest{position:relative;width:180px;height:140px;padding:0;border:0;background:none;box-shadow:none;perspective:600px}
+.chest:not(.open){animation:rattle 2.2s ease-in-out infinite}
+@keyframes rattle{0%,80%,100%{transform:none}84%{transform:rotate(-4deg)}88%{transform:rotate(4deg)}92%{transform:rotate(-3deg)}}
+.chest .box{position:absolute;left:0;right:0;bottom:0;height:88px;border-radius:8px 8px 16px 16px;
+  background:repeating-linear-gradient(90deg,#a5622f 0 28px,#8d5027 28px 32px);border:5px solid #5e3416;box-shadow:inset 0 -12px #0002,0 10px 0 #5e341655}
+.chest .lid{position:absolute;left:0;right:0;bottom:83px;height:56px;border-radius:70px 70px 6px 6px;z-index:2;
+  background:linear-gradient(#c27c42,#94552a);border:5px solid #5e3416;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+.chest .box::before,.chest .lid::before{content:'';position:absolute;top:0;bottom:0;left:22px;right:22px;border-left:12px solid #f2c14e;border-right:12px solid #f2c14e}
+.chest .lock{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);font-size:32px;z-index:3;transition:.35s}
+.chest.open .lid{transform-origin:0 100%;transform:translate(-14px,-26px) rotate(-24deg)}
+.chest.open .lock{opacity:0;transform:translate(-50%,30px) scale(.4)}
+.chest::after{content:'';position:absolute;left:10%;right:10%;bottom:60px;height:70px;border-radius:50%;background:radial-gradient(#fff6b0,#ffd65c00 70%);opacity:0;transition:opacity .6s .2s}
+.chest.open::after{opacity:1}
+.loot{position:absolute;left:50%;bottom:90px;font-size:34px;pointer-events:none}
+.newsticker{display:inline-grid;justify-items:center;gap:2px;background:#fff;border:4px dashed #e08a2e;border-radius:22px;padding:10px 22px;animation:flipIn .8s backwards .4s}
+.newsticker span{font-size:56px;line-height:1}
+.newsticker small{color:#c0471a;font-size:16px}
+@keyframes flipIn{from{opacity:0;transform:rotateY(180deg) scale(.4)}}
+
+/* ---------- Kleebiseraamat ---------- */
+.book{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px;width:100%}
+.sticker{display:grid;justify-items:center;gap:0;padding:8px 4px;min-height:96px;border-radius:18px;font-size:14px;font-weight:800;background:#fff;animation:popIn .4s backwards;animation-delay:calc(var(--d)*18ms)}
+.sticker span{font-size:38px;line-height:1.1}
+.sticker.locked{background:#e7ece8;color:#9aa8a2;border-style:dashed;box-shadow:none}
+.sticker.locked span{filter:grayscale(1) opacity(.35)}
+
+/* ---------- Efektid ---------- */
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+.flystar{position:fixed;z-index:31;font-size:30px;pointer-events:none}
+.splash{position:fixed;z-index:4;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:3px solid #fff;animation:ripple .7s ease-out forwards}
+@keyframes ripple{to{transform:scale(7);opacity:0}}
+.jumper{position:fixed;z-index:4;pointer-events:none;font-size:30px}
+
+@media(max-width:760px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){
+  body{font-size:17px}
+  .menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .menu button{min-height:116px}
+  .slots{gap:4px}.tools{gap:5px}
+  .bar .progress{order:3;max-width:none;flex-basis:100%}
 }
-button:focus-visible,select:focus-visible { outline:4px solid #ad5418;outline-offset:3px }
-button:disabled { cursor:default }
-main { width:min(94%,900px); margin:auto; padding:14px 0 86px; text-align:center }
-h1,h2 { margin:.25em 0; font-family:Georgia,serif; line-height:1.08; text-wrap:balance }
-h1 { font-size:clamp(35px,6.8vw,66px); text-shadow:0 2px #fff9 }
-h2 { font-size:clamp(25px,4.3vw,40px) }
-p { margin:.45em 0 }
-header,.row,.tools,.slots {
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
-}
-header { justify-content:space-between; margin-bottom:12px }
-.small { font-size:16px; padding:7px 12px }
-select { padding:8px; border:2px solid #66958d; border-radius:12px; background:#fffbee }
-.seascape {
-  position:fixed; inset:0; overflow:hidden; z-index:-1; pointer-events:none;
-  background:
-    radial-gradient(circle at 81% 13%,#fff5b4 0 4vmin,#fff1ad70 4.2vmin,transparent 11vmin),
-    linear-gradient(#9bdeeb,#e0f6ee 53%,#71cccc 53.1%,#219aa5 77%,#f0d39d 77.2%,#fff2cd);
-}
-.cloud { position:absolute; left:7%; top:8%; font-size:clamp(40px,7vw,85px); opacity:.8; animation:drift 18s ease-in-out infinite alternate }
-@keyframes drift { to { transform:translateX(13vw) } }
-.wave { position:absolute; left:-25%; width:150%; height:12%; animation:swell 8s ease-in-out infinite alternate }
-.wave.one { top:58%; color:#91e4df }
-.wave.two { top:67%; color:#c8f2e7; animation: swell 6s ease-in-out infinite alternate-reverse }
-@keyframes swell { to { transform:translate(8%,6px) } }
-#beachCrab {
-  position:fixed; z-index:2; bottom:4px; left:1%; min-width:54px;
-  background:none; border:0; box-shadow:none; padding:0;
-  font-size:36px; filter:drop-shadow(0 3px 2px #62432155);
-  animation:scuttle 23s ease-in-out infinite alternate;
-}
-@keyframes scuttle { 0%,8%{left:1%} 43%{left:39%} 49%{left:39%} 92%,100%{left:calc(99% - 55px)} }
-#beachCrab span { display:block }
-#beachCrab.dance span { animation:dance .48s ease-in-out 2 }
-@keyframes dance { 30%{transform:translateY(-13px) rotate(12deg)} 65%{transform:rotate(-12deg)} }
-.hero { display:block; font-size:clamp(50px,9vmin,83px); line-height:1.15; margin:auto; filter:drop-shadow(0 5px 2px #416e7133) }
-.menu { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin:18px auto }
-.menu button { min-height:100px; font-size:clamp(15px,2vw,18px); padding:9px 5px }
-.icon { display:block; font-size:clamp(32px,5.5vmin,48px); filter:drop-shadow(0 3px 1px #604d3133) }
-.panel {
-  background:linear-gradient(145deg,#fffdf4f7,#fff5e3f2); border:2px solid #fff9;
-  box-shadow:inset 0 3px #fff,0 8px 0 #c6b39275,0 15px 25px #29565b24;
-  border-radius:27px; padding:clamp(12px,2.4vw,25px); margin:12px auto;
-}
-.stage { display:grid; gap:clamp(8px,2vh,17px); justify-items:center }
-.sample { font-size:clamp(48px,11vmin,88px); line-height:1.16 }
-.card { min-width:clamp(62px,13vw,120px); font-size:clamp(34px,7vmin,60px); padding:5px 12px }
-.tile { min-width:48px; font-size:clamp(24px,4.5vmin,38px); padding:5px 11px }
-.slot { min-width:28px; font-size:clamp(21px,4.3vw,36px); border-bottom:4px solid #aeb8a6; color:#72857c }
-.slot.next { background:#ffe9ac; border-color:#b16626 }
-.slot.filled { background:#d9f3c9; border-color:#4c9966; color:#285a43 }
-.used { visibility:hidden }
-.ok,.found,.lit { background:linear-gradient(#fbffcd,#aae6b2); border-color:#43825a }
-.lit { outline:5px solid #e5991e; transform:translateY(-4px) }
-#status { min-height:1.4em; color:#295e54 }
-.hint { animation:wiggle .32s ease-in-out }
-@keyframes wiggle { 30%{transform:rotate(-4deg)} 70%{transform:rotate(4deg)} }
-.pair { display:flex; width:100%; justify-content:center; gap:10px }
-.picture,.board { display:grid; grid-template-columns:repeat(2,1fr); overflow:hidden; border:3px solid #698b7e; border-radius:15px }
-.picture { width:min(44%,210px) }
-.spot { min-width:0; aspect-ratio:1.3; border:1px solid #d5dfc9; border-radius:0; box-shadow:none; padding:0; font-size:clamp(28px,6vmin,50px) }
-.board { width:min(52vw,30vh,220px); aspect-ratio:1 }
-.cell { min-width:0; min-height:0; background:white; border:1px dashed #9aa799 }
-.cell svg { opacity:.22 }
-.cell.active { outline:4px dashed #b9651d; outline-offset:-5px }
-.cell.placed svg { opacity:1 }
-.piece { width:clamp(52px,15vw,88px); aspect-ratio:1; padding:0; overflow:hidden }
-.cell svg,.piece svg { width:100%; height:100%; display:block }
-.pond { display:flex; width:min(100%,520px); justify-content:center; gap:5px; background:#a3dfe2; padding:25px 6px 12px; border-radius:25px }
-.pad { position:relative; flex:1; max-width:76px; padding:3px; border-radius:50%; background:linear-gradient(#d5ef91,#85c67b) }
-.frog { position:absolute; left:50%; top:-25px; transform:translateX(-50%); font-size:30px }
-.map,.movie { width:min(100%,680px); border-radius:20px; overflow:hidden; border:3px solid #578c89; background:#b9e8e4 }
-.map { display:block; touch-action:none; user-select:none; -webkit-user-select:none; cursor:crosshair }
-.movie { position:relative; aspect-ratio:2.2; min-height:145px; background:linear-gradient(#a7dfec,#ecf9e9 55%,#86d5ce 56%,#3a99aa) }
-.movie .land { position:absolute; bottom:15%; right:7%; font-size:clamp(47px,9vw,95px); filter:drop-shadow(0 6px 2px #365b5c55) }
-.movie .actor { position:absolute; bottom:12%; left:5%; font-size:clamp(37px,7vw,72px); }
-.movie.play .actor { animation:voyage 2.8s ease-in-out forwards }
-@keyframes voyage { 0%{left:5%;transform:rotate(-7deg)} 40%{transform:translateY(-8px) rotate(4deg)} 100%{left:55%;transform:rotate(-3deg)} }
-.movie .sky { position:absolute; top:5%; left:9%; font-size:clamp(27px,6vw,48px) }
-.storybtn { min-width:110px }
-.storybtn span { display:block; font-size:36px }
-.swatch { min-width:49px; font-size:22px }
-[aria-pressed="true"].swatch { outline:3px solid #396b70; outline-offset:2px }
-.spark { position:fixed; z-index:4; pointer-events:none; left:50%; top:43%; animation:burst .7s ease-out forwards; font-size:24px }
-@keyframes burst { to { transform:translate(var(--x),var(--y)); opacity:0 } }
-@media(max-width:720px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:480px){.menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.slots{gap:4px}.tools{gap:5px}}
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after { animation:none!important; transition:none!important }
-  .movie.play .actor { left:55% }
-  .spark { display:none }
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .movie.play .actor{left:55%}
 }
 </style>
 </head>
 <body>
 <div class="seascape" aria-hidden="true">
-  <span class="cloud">☁️</span>
-  <svg class="wave one" viewBox="0 0 800 70" preserveAspectRatio="none">
-    <path d="M0 25Q50 0 100 25T200 25T300 25T400 25T500 25T600 25T700 25T800 25V70H0Z" fill="currentColor"/>
-  </svg>
-  <svg class="wave two" viewBox="0 0 800 70" preserveAspectRatio="none">
-    <path d="M0 23Q50 47 100 23T200 23T300 23T400 23T500 23T600 23T700 23T800 23V70H0Z" fill="currentColor"/>
-  </svg>
+  <div class="stars"></div>
+  <div class="sun"></div>
+  <span class="cloud c1">☁️</span><span class="cloud c2">☁️</span><span class="cloud c3">☁️</span>
+  <svg class="bird" viewBox="0 0 40 16"><path d="M2 12Q11 1 20 11Q29 1 38 12" fill="none" stroke="#2d4b55" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="bird b2" viewBox="0 0 40 16"><path d="M2 12Q11 1 20 11Q29 1 38 12" fill="none" stroke="#2d4b55" stroke-width="3" stroke-linecap="round"/></svg>
+  <span class="boat">⛵</span>
+  <svg class="wave one" viewBox="0 0 800 70" preserveAspectRatio="none"><path d="M0 25Q50 0 100 25T200 25T300 25T400 25T500 25T600 25T700 25T800 25V70H0Z" fill="currentColor"/></svg>
+  <svg class="wave two" viewBox="0 0 800 70" preserveAspectRatio="none"><path d="M0 23Q50 47 100 23T200 23T300 23T400 23T500 23T600 23T700 23T800 23V70H0Z" fill="currentColor"/></svg>
+  <svg class="wave three" viewBox="0 0 800 70" preserveAspectRatio="none"><path d="M0 30Q40 10 80 30T160 30T240 30T320 30T400 30T480 30T560 30T640 30T720 30T800 30V70H0Z" fill="currentColor"/></svg>
+  <span class="bubble-bg" style="left:12%;animation-delay:0s"></span>
+  <span class="bubble-bg" style="left:33%;animation-delay:3s;width:8px;height:8px"></span>
+  <span class="bubble-bg" style="left:58%;animation-delay:5s"></span>
+  <span class="bubble-bg" style="left:82%;animation-delay:1.5s;width:16px;height:16px"></span>
+  <span class="shell" style="left:8%">🐚</span><span class="shell" style="left:47%;bottom:9%">⭐</span><span class="shell" style="left:70%;bottom:3%">🐚</span>
 </div>
+<canvas id="fx" aria-hidden="true"></canvas>
 <button id="beachCrab" aria-label="Tervita rannakrabi"><span>🦀</span></button>
+<button id="buddy" class="buddy" aria-label="Hüljes sõber"><span class="say" id="say"></span><span class="seal">🦭</span></button>
 <main id="app"></main>
 <script>
 'use strict';
 
 // 50 sõna. Igal sõnal on oma pilt.
-const words = [
+const words=[
   ['KALA','🐟'],['KRABI','🦀'],['HÜLJES','🦭'],['VAAL','🐋'],['HAI','🦈'],
   ['DELFIIN','🐬'],['KARP','🐚'],['PAAT','⛵'],['LAEV','🚢'],['KAHEKSAJALG','🐙'],
   ['KASS','🐱'],['KOER','🐶'],['KARU','🐻'],['REBANE','🦊'],['JÄNES','🐰'],
@@ -151,227 +300,359 @@ const words = [
   ['LILL','🌷'],['SEEN','🍄'],['AUTO','🚗'],['BUSS','🚌'],['RONG','🚂']
 ].map(([word,icon])=>({word,icon}));
 
-const games = {
-  match:['🦭','Leia sama pilt',matchGame],
-  letters:['🔠','Leia sama täht',letterGame],
-  spell:['🧱','Lao sõna',spellGame],
-  puzzle:['🧩','Pane pusle kokku',puzzleGame],
-  diff:['🔎','Leia erinevused',diffGame],
-  frog:['🐸','Konna hüpped',frogGame],
-  memory:['✨','Jäta meelde',memoryGame],
-  initial:['🎒','Leia algustäht',initialGame],
-  map:['🗺️','Joonista aardekaart',mapGame],
-  movie:['🎬','Hülge merefilm',movieGame]
+const games={
+  match:  {i:'🦭',n:'Leia sama pilt',     c:'#36b8d6',f:matchGame},
+  letters:{i:'🔠',n:'Leia sama täht',     c:'#ff9f43',f:letterGame},
+  spell:  {i:'🧱',n:'Lao sõna',           c:'#e66767',f:spellGame},
+  puzzle: {i:'🧩',n:'Pane pusle kokku',   c:'#8e7cf0',f:puzzleGame},
+  diff:   {i:'🔎',n:'Leia erinevused',    c:'#26b38f',f:diffGame},
+  frog:   {i:'🐸',n:'Konna hüpped',       c:'#6ab04c',f:frogGame},
+  memory: {i:'✨',n:'Jäta meelde',        c:'#e86ad6',f:memoryGame},
+  initial:{i:'🎒',n:'Leia algustäht',     c:'#e6a817',f:initialGame},
+  map:    {i:'🗺️',n:'Joonista aardekaart',c:'#c47e3c',f:mapGame},
+  movie:  {i:'🎬',n:'Hülge merefilm',     c:'#3d8bfd',f:movieGame}
 };
+const praises=['Tubli!','Super!','Vahva!','Väga hea!','Täpselt!','Hästi tehtud!','Suurepärane!','Jess!'];
+const cheers=['Peaaegu!','Proovi uuesti!','Sa saad hakkama!','Vaata hoolega!'];
 
-const get = id=>document.getElementById(id);
-const app = get('app');
-const alphabet = [...new Set(words.flatMap(x=>[...x.word]))];
-const bags = new Map(), timers = new Set();
-let game,deck,round,rounds=16,locked=false,voiceText='',sound=true,audio;
-let stars=0;
-try { stars=Number(localStorage.getItem('rannasober-stars'))||0 } catch {}
+const get=id=>document.getElementById(id);
+const app=get('app');
+const alphabet=[...new Set(words.flatMap(x=>[...x.word]))];
+const bags=new Map(),timers=new Set();
+const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store={
+  get(k,d){try{const v=localStorage.getItem('rannasober-'+k);return v==null?d:JSON.parse(v)}catch{return d}},
+  set(k,v){try{localStorage.setItem('rannasober-'+k,JSON.stringify(v))}catch{}}
+};
+let game,deck,round,rounds=store.get('rounds',16),locked=false,voiceText='',sound=true,audio;
+let stars=Number(store.get('stars',0))||0;
+let stickers=new Set(store.get('stickers',[]));
+let medals=store.get('medals',{});
+let night=store.get('night',false);
+let streak=0,misses=0,missRound=0,hint=null;
+document.body.classList.toggle('night',night);
 
-function mix(items){
-  const a=[...items];
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
+/* ---------- Abifunktsioonid ---------- */
+function mix(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function pick(items){return items[Math.floor(Math.random()*items.length)]}
 function nextItems(key,pool,count){
-  let bag=bags.get(key)||[];
-  const result=[];
+  let bag=bags.get(key)||[];const result=[];
   while(result.length<count){
-    if(!bag.length){
-      bag=[...mix(pool.filter(x=>result.includes(x))),...mix(pool.filter(x=>!result.includes(x)))];
-    }
+    if(!bag.length)bag=[...mix(pool.filter(x=>result.includes(x))),...mix(pool.filter(x=>!result.includes(x)))];
     result.push(bag.pop());
   }
-  bags.set(key,bag);
-  return result;
+  bags.set(key,bag);return result;
 }
-function later(fn,ms){
-  const id=setTimeout(()=>{timers.delete(id);fn()},ms);
-  timers.add(id);
-}
-function cancel(){
-  timers.forEach(clearTimeout);timers.clear();
-  if('speechSynthesis' in window) speechSynthesis.cancel();
-}
+function later(fn,ms){const id=setTimeout(()=>{timers.delete(id);fn()},ms);timers.add(id)}
+function cancel(){timers.forEach(clearTimeout);timers.clear();if('speechSynthesis' in window)speechSynthesis.cancel()}
+function center(el){const r=el.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+
+/* ---------- Heli ---------- */
 function unlock(){
   if(!sound)return;
-  try{
-    const C=window.AudioContext||window.webkitAudioContext;
-    if(!C)return;
-    if(!audio)audio=new C();
-    if(audio.state==='suspended')audio.resume().catch(()=>{});
-  }catch{}
+  try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+    if(!audio)audio=new C();if(audio.state==='suspended')audio.resume().catch(()=>{})}catch{}
 }
-function tone(hz=480,delay=0){
+function tone(hz=480,delay=0,type='sine',dur=.18,vol=.07){
   if(!sound||!audio||audio.state!=='running')return;
-  const t=audio.currentTime+delay;
-  const o=audio.createOscillator(),g=audio.createGain();
-  o.frequency.value=hz;o.type='sine';
-  g.gain.setValueAtTime(.001,t);
-  g.gain.exponentialRampToValueAtTime(.07,t+.02);
-  g.gain.exponentialRampToValueAtTime(.001,t+.18);
-  o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.2);
+  const t=audio.currentTime+delay,o=audio.createOscillator(),g=audio.createGain();
+  o.frequency.value=hz;o.type=type;
+  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+dur+.02);
   o.onended=()=>{o.disconnect();g.disconnect()};
+}
+function chord(){[523,659,784,1047].forEach((h,i)=>tone(h,i*.08,'triangle',.3,.06))}
+function boo(){tone(300,0,'triangle',.14,.06);tone(220,.11,'triangle',.22,.06)}
+function plop(){
+  if(!sound||!audio||audio.state!=='running')return;
+  const t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();
+  o.type='sine';o.frequency.setValueAtTime(700+Math.random()*300,t);o.frequency.exponentialRampToValueAtTime(160,t+.15);
+  g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);
+  o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.2);
 }
 function speak(text){
   if(!text||!sound||!('speechSynthesis' in window))return false;
   const v=speechSynthesis.getVoices().find(v=>/^et(?:[-_]|$)/i.test(v.lang));
   if(!v)return false;
   speechSynthesis.cancel();
-  const line=new SpeechSynthesisUtterance(text);
-  line.voice=v;line.lang='et-EE';line.rate=.84;
+  const line=new SpeechSynthesisUtterance(text);line.voice=v;line.lang='et-EE';line.rate=.84;
   speechSynthesis.speak(line);return true;
 }
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function tell(text){voiceText=text;speak(text)}
 function status(text){if(get('status'))get('status').textContent=text}
+
+/* ---------- Efektid ---------- */
+const fx=get('fx'),ctx=fx.getContext('2d');let parts=[],fxRun=false;
+function sizeFx(){const d=devicePixelRatio||1;fx.width=innerWidth*d;fx.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}
+addEventListener('resize',sizeFx);sizeFx();
+function confetti(x=innerWidth/2,y=innerHeight*.4,n=70){
+  if(reduced())return;
+  const cols=['#ff7b6b','#ffd25e','#45b37a','#36b8d6','#b05bd6','#ff9fd1'];
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,s=3+Math.random()*8;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,r:6+Math.random()*6,c:pick(cols),rot:Math.random()*6,vr:(Math.random()-.5)*.4,life:80+Math.random()*50,round:Math.random()<.3});
+  }
+  if(!fxRun){fxRun=true;requestAnimationFrame(tick)}
+}
+function tick(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  parts=parts.filter(p=>p.life-->0&&p.y<innerHeight+30);
+  for(const p of parts){
+    p.vy+=.22;p.vx*=.985;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;
+    ctx.save();ctx.globalAlpha=Math.min(1,p.life/25);ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;
+    if(p.round){ctx.beginPath();ctx.arc(0,0,p.r*.45,0,7);ctx.fill()}else ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);
+    ctx.restore();
+  }
+  if(parts.length)requestAnimationFrame(tick);else{fxRun=false;ctx.clearRect(0,0,innerWidth,innerHeight)}
+}
+function flyStars(n,from){
+  const to=get('starCount'),chip=to&&to.parentElement;
+  const a=from?center(from):{x:innerWidth/2,y:innerHeight/2};
+  const b=to?center(to):{x:innerWidth-40,y:30};
+  for(let i=0;i<n;i++){
+    const s=document.createElement('span');s.className='flystar';s.textContent='⭐';
+    s.style.left=a.x+'px';s.style.top=a.y+'px';document.body.append(s);
+    const dx=b.x-a.x,dy=b.y-a.y;
+    const anim=s.animate([
+      {transform:'translate(-50%,-50%) scale(.5)'},
+      {transform:`translate(calc(-50% + ${dx*.3}px),calc(-50% + ${dy*.3-90}px)) scale(1.7)`,offset:.45},
+      {transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.8)`}
+    ],{duration:reduced()?1:800,delay:i*180,easing:'cubic-bezier(.45,0,.55,1)',fill:'backwards'});
+    anim.onfinish=()=>{
+      s.remove();tone(880+i*120,0,'sine',.1,.05);
+      if(to){to.textContent=Number(to.textContent)+1;chip.classList.remove('bump');void chip.offsetWidth;chip.classList.add('bump')}
+    };
+  }
+}
+function splash(x,y){
+  const r=document.createElement('span');r.className='splash';r.style.left=x+'px';r.style.top=y+'px';
+  document.body.append(r);setTimeout(()=>r.remove(),720);plop();
+  if(reduced())return;
+  const j=document.createElement('span');j.className='jumper';j.textContent=pick(['🐟','🐠','🫧','⭐','🐡','💧']);
+  j.style.left=x+'px';j.style.top=y+'px';document.body.append(j);
+  const dx=(Math.random()-.5)*160;
+  j.animate([
+    {transform:'translate(-50%,-50%) scale(.3) rotate(0)',opacity:1},
+    {transform:`translate(calc(-50% + ${dx/2}px),calc(-50% - 90px)) scale(1.2) rotate(${dx>0?40:-40}deg)`,offset:.5},
+    {transform:`translate(calc(-50% + ${dx}px),-50%) scale(.6) rotate(${dx>0?120:-120}deg)`,opacity:0}
+  ],{duration:900,easing:'ease-out'}).onfinish=()=>j.remove();
+}
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button,select,svg,.panel,label,.seg,.chip,.progress'))return;
+  unlock();splash(e.clientX,e.clientY);
+});
+let sayT;
+function say(text,mood='happy'){
+  const b=get('buddy');get('say').textContent=text;
+  b.classList.remove('happy','think','talk');void b.offsetWidth;b.classList.add('talk',mood);
+  clearTimeout(sayT);sayT=setTimeout(()=>b.classList.remove('talk','happy','think'),2600);
+}
+get('buddy').onclick=()=>{
+  unlock();tone(660,0,'triangle');tone(880,.1,'triangle');
+  say(pick(['Tere, sõber! 👋','Mängime koos!','Mulle meeldib meri! 🌊','Kogu tähti! ⭐','Puuduta merd – kalad hüppavad!','Kas leiad aarde?']));
+};
+get('beachCrab').onclick=()=>{
+  unlock();const crab=get('beachCrab');
+  crab.classList.remove('dance');void crab.offsetWidth;crab.classList.add('dance');
+  tone(620);tone(760,.12);const p=center(crab);splash(p.x,p.y-30);
+};
+
+/* ---------- Nupud ---------- */
 function btn(parent,label,html,action,css=''){
   const b=document.createElement('button');
   b.type='button';b.className=css;b.setAttribute('aria-label',label);
   b.innerHTML=html;b.onclick=()=>{unlock();action(b)};
   parent.append(b);return b;
 }
-function retry(b,text='Proovi veel.'){
-  b.classList.remove('hint');void b.offsetWidth;b.classList.add('hint');
-  tone(300);status(text);
+function clearGlow(){document.querySelectorAll('.glow').forEach(n=>n.classList.remove('glow'));missRound=0}
+function fail(b,text='Proovi veel.'){
+  if(b){b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+  boo();status(text);streak=0;misses++;missRound++;paintStreak();
+  try{navigator.vibrate&&navigator.vibrate(50)}catch{}
+  if(missRound===1||missRound%3===0)say(pick(cheers),'think');
+  if(missRound>=2&&hint){const h=hint();if(h)h.classList.add('glow')}
 }
-function celebrate(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  for(let i=0;i<7;i++){
-    const s=document.createElement('span');s.className='spark';
-    s.textContent=i%2?'✦':'⭐';s.setAttribute('aria-hidden','true');
-    const angle=Math.PI*2*i/7;
-    s.style.setProperty('--x',Math.cos(angle)*95+'px');
-    s.style.setProperty('--y',Math.sin(angle)*70-30+'px');
-    document.body.append(s);setTimeout(()=>s.remove(),760);
-  }
-}
+function stepOk(b){clearGlow();if(b){const p=center(b);confetti(p.x,p.y,12)}}
+function paintStreak(){const s=get('streak');if(s)s.textContent=streak>=2?'🔥 '+streak+' järjest':''}
 function controls(parent,replay){
-  const b=btn(parent,'Lülita heli sisse või välja','',()=>{
-    sound=!sound;paint();
-    if(sound){unlock();tone();speak(voiceText)}
-    else if('speechSynthesis' in window)speechSynthesis.cancel();
-  },'small');
-  function paint(){b.textContent=sound?'🔊':'🔇';b.setAttribute('aria-pressed',String(sound))}
-  paint();
-  if(replay)btn(parent,'Kuula juhist uuesti','👂 Kuula',()=>{
+  if(replay)btn(parent,'Kuula juhist uuesti','👂',()=>{
     if(!sound){status('Heli saad sisse lülitada kõlarinupust.');return}
-    if(!speak(voiceText)){tone();status('Jälgi pilte. Eesti kõnehääl pole seadmes saadaval.')}
+    if(!speak(voiceText)){tone();status('Eesti kõnehääl pole selles seadmes saadaval – jälgi pilte.')}
   },'small');
+  const s=btn(parent,'Lülita heli sisse või välja','',()=>{
+    sound=!sound;paintS();
+    if(sound){unlock();tone();speak(voiceText)}else if('speechSynthesis' in window)speechSynthesis.cancel();
+  },'small');
+  function paintS(){s.textContent=sound?'🔊':'🔇';s.setAttribute('aria-pressed',String(sound))}
+  paintS();
+  const n=btn(parent,'Vaheta päev ja öö','',()=>{
+    night=!night;store.set('night',night);document.body.classList.toggle('night',night);paintN();tone(night?330:660,0,'triangle');
+    say(night?'Head ööd, meri! 🌙':'Tere hommikust! ☀️');
+  },'small');
+  function paintN(){n.textContent=night?'☀️':'🌙'}
+  paintN();
 }
-get('beachCrab').onclick=()=>{
-  unlock();const crab=get('beachCrab');
-  crab.classList.remove('dance');void crab.offsetWidth;crab.classList.add('dance');
-  tone(620);tone(760,.12);
-};
+function starChip(){return '<span class="chip" title="Tähed">⭐ <b id="starCount">'+stars+'</b></span>'}
 
+/* ---------- Ekraanid ---------- */
 function home(){
   cancel();locked=false;voiceText='';
-  app.innerHTML='<header><span>⭐ '+stars+'</span><div class="tools" id="tools"></div></header>'+
-    '<div class="hero">🏝️</div><h1>Rannasõbra aardesaar</h1>'+
-    '<div class="row"><label for="length">Voorude arv</label>'+
-    '<select id="length"><option>8</option><option>16</option><option>24</option></select></div>'+
-    '<div class="menu" id="menu"></div>';
+  const title='Rannasõbra aardesaar';
+  app.innerHTML='<header class="bar">'+starChip()+'<div class="tools" id="tools"></div></header>'+
+    '<div class="hero">🏝️</div><h1 class="title">'+title.split(' ').map((w,k)=>'<span class="word">'+[...w].map((c,i)=>'<span style="--i:'+(i+k*10)+'">'+c+'</span>').join('')+'</span>').join(' ')+'</h1>'+
+    '<p class="tag">Vali mäng, kogu tähti ja ava aardelaegas!</p>'+
+    '<div class="row"><span>Voorusid:</span><div class="seg" id="seg" role="group" aria-label="Voorude arv"></div></div>'+
+    '<div class="menu" id="menu"></div><div class="row" id="extra"></div>';
   controls(get('tools'),false);
-  get('length').value=rounds;
-  get('length').onchange=e=>{rounds=Number(e.target.value)};
-  for(const [key,[icon,name]] of Object.entries(games)){
-    btn(get('menu'),name,'<span class="icon">'+icon+'</span>'+name,()=>{tone();start(key)});
+  for(const n of [8,16,24]){
+    const b=btn(get('seg'),n+' vooru',String(n),()=>{
+      rounds=n;store.set('rounds',n);tone(500+n*10);
+      get('seg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    });
+    b.setAttribute('aria-pressed',String(n===rounds));
   }
+  Object.entries(games).forEach(([key,g],i)=>{
+    const m=medals[key]?'<span class="medal">🏅 '+medals[key]+'</span>':'';
+    const b=btn(get('menu'),g.n,'<span class="icon">'+g.i+'</span>'+g.n+m,()=>{tone(600,0,'triangle');start(key)});
+    b.style.setProperty('--c',g.c);b.style.setProperty('--d',i);
+  });
+  btn(get('extra'),'Kleebiseraamat','📒 Kleebiseraamat '+stickers.size+' / '+words.length,book);
 }
 function start(key){
-  cancel();game=key;round=0;
+  cancel();game=key;round=0;streak=0;misses=0;
   deck=nextItems(key,words,rounds);
-  // Sõnamäng algab võimaluse korral lühikese sõnaga.
-  if(key==='spell'){
-    const i=deck.findIndex(x=>x.word.length<=4);
-    if(i>0)[deck[0],deck[i]]=[deck[i],deck[0]];
-  }
+  if(key==='spell'){const i=deck.findIndex(x=>x.word.length<=4);if(i>0)[deck[0],deck[i]]=[deck[i],deck[0]]}
+  say(pick(['Lähme!','Alustame!','Sa saad hakkama!']),'happy');
   show();
 }
 function show(){
-  cancel();locked=false;
-  app.innerHTML='<header><div id="nav"></div><span>🐚 '+(round+1)+' / '+rounds+
-    '</span><div class="tools" id="tools"></div></header><h2>'+games[game][1]+
-    '</h2><section class="panel"><div class="stage" id="stage"></div>'+
-    '<p role="status" id="status"></p></section>';
-  btn(get('nav'),'Tagasi mänguvalikusse','⌂ Avaleht',home,'small');
-  controls(get('tools'),true);
-  games[game][2](deck[round]);
+  cancel();locked=false;hint=null;missRound=0;
+  const g=games[game];
+  app.innerHTML='<header class="bar"><div id="nav"></div>'+
+    '<div class="progress" aria-label="Edenemine"><div class="fill" style="width:'+(round/rounds*100)+'%"></div><span>🐚 '+(round+1)+' / '+rounds+'</span></div>'+
+    starChip()+'<div class="tools" id="tools"></div></header>'+
+    '<h2>'+g.i+' '+g.n+'</h2><div class="streak" id="streak"></div>'+
+    '<section class="panel"><div class="stage" id="stage"></div><p role="status" id="status"></p></section>';
+  btn(get('nav'),'Tagasi mänguvalikusse','⌂',home,'small');
+  controls(get('tools'),true);paintStreak();
+  g.f(deck[round]);
 }
 function win(b){
   if(locked)return;
-  locked=true;if(b)b.classList.add('ok');
-  stars++;try{localStorage.setItem('rannasober-stars',String(stars))}catch{}
-  celebrate();tone(523);tone(659,.12);tone(784,.24);
-  status('⭐ Tubli! Üks täht juures.');
-  later(()=>{round++;round<rounds?show():treasure()},1100);
+  locked=true;clearGlow();if(b)b.classList.add('ok');
+  streak++;const bonus=streak%3===0;const gain=bonus?2:1;
+  stars+=gain;store.set('stars',stars);
+  const p=b?center(b):{x:innerWidth/2,y:innerHeight*.45};
+  confetti(p.x,p.y,bonus?110:70);flyStars(gain,b);chord();paintStreak();
+  const w=pick(praises);
+  status(bonus?'🔥 '+streak+' järjest! Boonustäht!':'⭐ '+w);say(bonus?'Boonus! 🔥':w,'happy');
+  const fill=document.querySelector('.progress .fill');if(fill)fill.style.width=((round+1)/rounds*100)+'%';
+  later(()=>{round++;round<rounds?show():treasure()},1500);
 }
 function treasure(){
   cancel();
-  app.innerHTML='<section class="panel stage"><h1>Sinu aardelaegas</h1>'+
-    '<div id="gift"></div><p id="reward">Puuduta laegast!</p><div class="row" id="again"></div></section>';
-  btn(get('gift'),'Ava aardelaegas','🎁',b=>{
-    b.textContent=pick(['💎','👑','💍','🏆']);b.disabled=true;celebrate();tone(760);
+  const ratio=misses/rounds,score=ratio<=.15?3:ratio<=.5?2:1;
+  app.innerHTML='<header class="bar"><div id="nav"></div>'+starChip()+'</header>'+
+    '<section class="panel stage"><h1 style="font-size:clamp(34px,6vw,58px)">Sinu aardelaegas</h1>'+
+    '<div class="rating" id="rating"></div><div class="chestwrap" id="chestWrap"></div>'+
+    '<p id="reward" style="font-size:20px">Puuduta laegast!</p><div id="sticker"></div><div class="row" id="again"></div></section>';
+  btn(get('nav'),'Avaleht','⌂',home,'small');
+  get('rating').innerHTML=[0,1,2].map(i=>'<span style="animation-delay:'+(i*.3)+'s">'+(i<score?'⭐':'☆')+'</span>').join('');
+  tell('Puuduta laegast!');say('Ava laegas! 🎁','happy');
+  btn(get('chestWrap'),'Ava aardelaegas','<span class="lid"></span><span class="box"></span><span class="lock">🔒</span>',b=>{
+    if(b.classList.contains('open'))return;
+    b.classList.add('open');chord();tone(1200,.4,'triangle',.3,.05);
+    const p=center(b);confetti(p.x,p.y-40,140);
+    if(!reduced())for(let i=0;i<9;i++){
+      const l=document.createElement('span');l.className='loot';l.textContent=pick(['💎','👑','🪙','💍','💰','✨','🪙']);
+      get('chestWrap').append(l);const dx=(i-4)*26+(Math.random()-.5)*20;
+      l.animate([{transform:'translate(-50%,0) scale(.3)',opacity:0},{transform:`translate(calc(-50% + ${dx}px),-${90+Math.random()*60}px) scale(1.2)`,opacity:1,offset:.5},
+        {transform:`translate(calc(-50% + ${dx*1.4}px),-40px) scale(1)`,opacity:1}],{duration:1100,delay:i*60,easing:'ease-out',fill:'forwards'});
+    }
+    medals[game]=(medals[game]||0)+1;store.set('medals',medals);
+    const fresh=words.filter(w=>!stickers.has(w.word));
     get('reward').textContent='Leidsid aarde! Sul on kokku '+stars+' tähte.';
-    tell('Leidsid aarde!');
-  },'sample');
-  btn(get('again'),'Mängi edasi','▶ Mängi edasi',()=>start(game));
+    if(fresh.length){
+      const s=pick(fresh);stickers.add(s.word);store.set('stickers',[...stickers]);
+      get('sticker').innerHTML='<div class="newsticker"><small>Uus kleebis!</small><span>'+s.icon+'</span><b>'+s.word+'</b></div>';
+      tell('Leidsid aarde! Uus kleebis: '+s.word.toLowerCase()+'.');
+    }else{
+      get('sticker').innerHTML='<div class="newsticker"><small>Kõik kleebised koos!</small><span>🏆</span><b>MEISTER</b></div>';
+      tell('Leidsid aarde! Sul on kõik kleebised!');
+    }
+  },'chest');
+  btn(get('again'),'Mängi uuesti','▶ Mängi uuesti',()=>start(game));
+  btn(get('again'),'Kleebiseraamat','📒 Kleebised',book);
   btn(get('again'),'Vali mäng','⌂ Vali mäng',home);
 }
-function rows(sample){
-  get('stage').innerHTML='<div class="sample" id="sample">'+sample+'</div><div class="row" id="options"></div>';
+function book(){
+  cancel();
+  app.innerHTML='<header class="bar"><div id="nav"></div>'+starChip()+'<div class="tools" id="tools"></div></header>'+
+    '<h2>📒 Kleebiseraamat</h2><p class="tag">Kogutud '+stickers.size+' / '+words.length+' – iga lõpetatud mäng toob uue kleebise!</p>'+
+    '<section class="panel"><div class="book" id="bookGrid"></div><p role="status" id="status"></p></section>';
+  btn(get('nav'),'Avaleht','⌂',home,'small');controls(get('tools'),false);
+  words.forEach((w,i)=>{
+    const own=stickers.has(w.word);
+    const b=btn(get('bookGrid'),own?w.word:'Lukus kleebis',own?'<span>'+w.icon+'</span>'+w.word:'<span>'+w.icon+'</span>???',x=>{
+      if(own){x.classList.remove('ok');void x.offsetWidth;x.classList.add('ok');tone(500+i*8,0,'triangle');speak(w.word.toLowerCase());status(w.icon+' '+w.word)}
+      else{x.classList.remove('shake');void x.offsetWidth;x.classList.add('shake');status('See kleebis on veel peidus. Mängi ja leia see!')}
+    },'sticker'+(own?'':' locked'));
+    b.style.setProperty('--d',i);
+  });
+}
+
+/* ---------- Valikumängud ---------- */
+function rows(sample,cls=''){
+  get('stage').innerHTML='<div class="sample '+cls+'" id="sample">'+sample+'</div><div class="row" id="options"></div>';
 }
 function choose(correct,pool,render,label,instruction){
   const n=round<2?2:round<5?3:4;
   const wrong=mix(pool.filter(x=>x!==correct)).slice(0,n-1);
-  for(const x of mix([correct,...wrong])){
-    btn(get('options'),label(x),render(x),b=>{
+  let good;
+  mix([correct,...wrong]).forEach((x,i)=>{
+    const b=btn(get('options'),label(x),render(x),b=>{
       if(locked)return;
-      if(x===correct)win(b);else retry(b,'Vaata näidist ja proovi uuesti.');
+      if(x===correct)win(b);else fail(b,'Vaata näidist ja proovi uuesti.');
     },'card');
-  }
-  tell(instruction);
+    b.style.setProperty('--d',i);if(x===correct)good=b;
+  });
+  hint=()=>good;tell(instruction);
 }
-function matchGame(x){
-  rows(x.icon);choose(x,words,i=>i.icon,i=>i.word,'Leia sama pilt. '+x.word.toLowerCase()+'.');
-}
-function letterGame(x){
-  const c=pick([...x.word]);rows(c);
-  choose(c,alphabet,i=>i,i=>'Täht '+i,'Leia sama täht. '+c+'.');
-}
+function matchGame(x){rows(x.icon);choose(x,words,i=>i.icon,i=>i.word,'Leia sama pilt. '+x.word.toLowerCase()+'.')}
+function letterGame(x){const c=pick([...x.word]);rows(c,'letter');choose(c,alphabet,i=>i,i=>'Täht '+i,'Leia sama täht. '+c+'.')}
 function initialGame(x){
-  rows(x.icon+'<div style="font-size:25px"><strong style="color:#a34818">'+
-    x.word[0]+'</strong>'+x.word.slice(1)+'</div>');
+  rows(x.icon+'<div style="font-size:clamp(24px,4vw,32px);letter-spacing:3px"><strong style="color:#d2561a;font-size:1.3em">?</strong>'+x.word.slice(1)+'</div>');
   choose(x.word[0],alphabet,i=>i,i=>'Täht '+i,x.word.toLowerCase()+'. Leia esimene täht.');
 }
+
+/* ---------- Lao sõna ---------- */
 function spellGame(x){
   let cursor=0;const letters=[...x.word];
-  get('stage').innerHTML='<div class="sample">'+x.icon+'</div>'+
-    '<div class="slots" id="slots"></div><div class="row" id="tiles"></div>';
-  for(const c of letters){
-    const s=document.createElement('span');s.className='slot';s.textContent=c;get('slots').append(s);
-  }
+  get('stage').innerHTML='<div class="sample">'+x.icon+'</div><div class="slots" id="slots"></div><div class="row" id="tiles"></div>';
+  for(const c of letters){const s=document.createElement('span');s.className='slot';s.textContent=c;get('slots').append(s)}
   const slots=get('slots').children;slots[0].classList.add('next');
-  for(const c of mix(letters)){
-    btn(get('tiles'),'Täht '+c,c,b=>{
-      if(locked)return;
-      if(c!==letters[cursor]){retry(b,'Otsi tähte '+letters[cursor]+'.');return}
-      b.disabled=true;b.classList.add('used');slots[cursor].className='slot filled';tone(440+cursor*40);
+  const tiles=[];
+  mix(letters).forEach((c,i)=>{
+    const b=btn(get('tiles'),'Täht '+c,c,b=>{
+      if(locked||b.disabled)return;
+      if(c!==letters[cursor]){fail(b,'Otsi tähte '+letters[cursor]+'.');return}
+      const slot=slots[cursor];b.disabled=true;
+      const a=center(b),t=center(slot);
+      const f=document.createElement('span');f.className='flystar';f.textContent=c;f.style.cssText+='font-weight:800;font-size:34px;color:#0f6b74;left:'+a.x+'px;top:'+a.y+'px';
+      document.body.append(f);b.classList.add('used');
+      f.animate([{transform:'translate(-50%,-50%)'},{transform:`translate(calc(-50% + ${t.x-a.x}px),calc(-50% + ${t.y-a.y}px)) scale(1.2)`}],{duration:reduced()?1:280,easing:'ease-in'}).onfinish=()=>f.remove();
+      slot.className='slot filled';tone(440+cursor*45,0,'triangle');stepOk();
       if(++cursor===letters.length){speak(x.word.toLowerCase());win();return}
       slots[cursor].classList.add('next');voiceText='Leia täht '+letters[cursor]+'.';status(voiceText);
     },'tile');
-  }
+    b.style.setProperty('--d',i);tiles.push([c,b]);
+  });
+  hint=()=>{const t=tiles.find(([c,b])=>c===letters[cursor]&&!b.disabled);return t&&t[1]};
   tell('Lao sõna '+x.word.toLowerCase()+'. Leia täht '+letters[0]+'.');
 }
+
+/* ---------- Pusle (klõps või lohistamine) ---------- */
 function crop(x,i){
   const boxes=['0 0 50 50','50 0 50 50','0 50 50 50','50 50 50 50'];
   return '<svg aria-hidden="true" viewBox="'+boxes[i]+'"><rect width="100" height="100" fill="#c6eae9"/>'+
@@ -380,237 +661,256 @@ function crop(x,i){
     '<text x="50" y="73" text-anchor="middle" font-size="68">'+x.icon+'</text></svg>';
 }
 function puzzleGame(x){
-  let step=0;
-  const order=round<2?[0,1,2,3]:mix([0,1,2,3]);
+  const order=round<2?[0,1,2,3]:mix([0,1,2,3]),placed=new Set(),pieces={};
   const labels=['ülemine vasak','ülemine parem','alumine vasak','alumine parem'];
   get('stage').innerHTML='<div id="board" class="board"></div><div class="row" id="pieces"></div>';
   for(let i=0;i<4;i++)get('board').insertAdjacentHTML('beforeend','<div class="cell">'+crop(x,i)+'</div>');
-  const cells=get('board').children;cells[order[0]].classList.add('active');
-  for(const i of mix([0,1,2,3])){
-    btn(get('pieces'),labels[i]+' tükk',crop(x,i),b=>{
-      if(locked)return;
-      if(i!==order[step]){retry(b,'Vaata punktiiriga ruutu.');return}
-      cells[i].className='cell placed';b.classList.add('used');b.disabled=true;tone(460+step*55);
-      if(++step===4){win();return}
-      cells[order[step]].classList.add('active');
-    },'piece');
+  const cells=[...get('board').children];
+  const active=()=>order.find(i=>!placed.has(i));
+  const paint=()=>cells.forEach((c,i)=>c.classList.toggle('active',i===active()));
+  function place(i,b){
+    placed.add(i);cells[i].classList.add('placed');b.classList.add('used');b.disabled=true;
+    tone(460+placed.size*60,0,'triangle');stepOk(cells[i]);
+    if(placed.size===4){cells.forEach(c=>c.classList.remove('active'));get('board').classList.add('done');win();return}
+    paint();
   }
-  tell('Leia märgitud kohta sobiv tükk.');
+  let dragged=false;
+  for(const i of mix([0,1,2,3])){
+    const b=btn(get('pieces'),labels[i]+' tükk',crop(x,i),()=>{
+      if(locked||dragged)return;
+      if(i!==active()){fail(b,'Vaata punktiiriga ruutu – või lohista tükk õigesse kohta.');return}
+      place(i,b);
+    },'piece');
+    pieces[i]=b;
+    let start=null,ghost=null,over=null;
+    b.addEventListener('pointerdown',e=>{if(locked||b.disabled)return;start={x:e.clientX,y:e.clientY,id:e.pointerId};dragged=false});
+    b.addEventListener('pointermove',e=>{
+      if(!start||e.pointerId!==start.id)return;
+      if(!ghost&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>8){
+        dragged=true;try{b.setPointerCapture(e.pointerId)}catch{}
+        ghost=document.createElement('div');ghost.className='ghost';ghost.innerHTML=crop(x,i);document.body.append(ghost);b.style.opacity=.3;
+      }
+      if(ghost){
+        ghost.style.left=e.clientX+'px';ghost.style.top=e.clientY+'px';
+        const c=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');
+        if(over&&over!==c)over.classList.remove('over');over=c;if(c)c.classList.add('over');
+      }
+    });
+    const end=e=>{
+      if(!start||e.pointerId!==start.id)return;start=null;
+      if(ghost){
+        ghost.remove();ghost=null;b.style.opacity='';
+        if(over){over.classList.remove('over');const k=cells.indexOf(over);
+          if(k===i&&!placed.has(i))place(i,b);else fail(b,'See tükk ei sobi sinna.');}
+        over=null;setTimeout(()=>dragged=false,50);
+      }
+    };
+    b.addEventListener('pointerup',end);b.addEventListener('pointercancel',end);
+  }
+  paint();hint=()=>pieces[active()];
+  tell('Pane tükk märgitud kohta. Võid tükke ka lohistada.');
 }
+
+/* ---------- Leia erinevused ---------- */
 function diffGame(x){
   const pool=mix(words.filter(a=>a!==x));
   const left=mix([x,...pool.slice(0,3)]),right=[...left];
   const changed=mix([0,1,2,3]).slice(0,round<3?1:2),found=new Set();
   changed.forEach((v,i)=>right[v]=pool[i+3]);
   const task=changed.length===1?'Leia üks erinevus.':'Leia kaks erinevust.';
-  get('stage').innerHTML='<p>'+task+'</p><div class="pair"><div class="picture" id="left"></div>'+
-    '<div class="picture" id="right"></div></div>';
+  get('stage').innerHTML='<p style="font-size:20px">🔎 '+task+'</p><div class="pair"><div class="picture" id="left"></div><div class="picture" id="right"></div></div>';
   for(const [side,list] of [['left',left],['right',right]]){
     list.forEach((v,i)=>btn(get(side),v.word,v.icon,b=>{
       if(locked||found.has(i))return;
-      if(!changed.includes(i)){retry(b,'Need pildid on ühesugused.');return}
+      if(!changed.includes(i)){fail(b,'Need pildid on ühesugused.');return}
       found.add(i);for(const s of ['left','right'])get(s).children[i].classList.add('found');
-      if(found.size===changed.length)win();else{tone(620);status('Üks erinevus veel!')}
+      if(found.size===changed.length)win(b);else{tone(620,0,'triangle');stepOk(b);status('Üks erinevus veel!')}
     },'spot'));
   }
+  hint=()=>{const i=changed.find(k=>!found.has(k));return i==null?null:get('right').children[i]};
   tell(task);
 }
+
+/* ---------- Konna hüpped ---------- */
 function frogGame(){
   const n=1+Math.floor(Math.random()*(round<2?3:6));let jumped=0;
-  get('stage').innerHTML='<div class="sample">🐸</div><p>Tee '+n+(n===1?' hüpe.':' hüpet.')+
-    '</p><div>'+('💧'.repeat(n))+'</div><div class="pond" id="pond"></div>';
+  get('stage').innerHTML='<p style="font-size:22px">Tee <b style="font-size:1.4em;color:#d2561a">'+n+'</b>'+(n===1?' hüpe':' hüpet')+'</p>'+
+    '<div class="drops" id="drops">'+'<span>💧</span>'.repeat(n)+'</div>'+
+    '<div class="pond" id="pond"><span class="bank" id="bank">🪨</span><span class="frog" id="frog">🐸</span></div>';
+  const pond=get('pond'),frog=get('frog'),pads=[];
+  const moveTo=el=>{
+    const c=el.offsetLeft+el.offsetWidth/2;frog.style.left=(c/pond.clientWidth*100)+'%';
+    frog.classList.remove('jump');void frog.offsetWidth;frog.classList.add('jump');
+  };
+  requestAnimationFrame(()=>{frog.style.transition='none';moveTo(get('bank'));frog.classList.remove('jump');void frog.offsetWidth;frog.style.transition=''});
   for(let i=1;i<=n;i++){
-    btn(get('pond'),'Vesiroosileht '+i,String(i),b=>{
+    const b=btn(pond,'Vesiroosileht '+i,String(i)+(i===n?'<span class="goal">🌸</span>':''),b=>{
       if(locked)return;
-      if(i!==jumped+1){retry(b,'Leia leht numbriga '+(jumped+1)+'.');return}
-      get('pond').querySelector('.frog')?.remove();
-      b.insertAdjacentHTML('beforeend','<span class="frog">🐸</span>');tone(350+i*65);speak(String(i));
-      if(++jumped===n)win(b);
+      if(i!==jumped+1){fail(b,'Leia leht numbriga '+(jumped+1)+'.');return}
+      moveTo(b);b.classList.add('done');tone(350+i*70,0,'triangle');speak(String(i));stepOk();
+      get('drops').children[i-1].classList.add('off');
+      if(++jumped===n){status('Konn jõudis lilleni! 🌸');win(b)}
     },'pad');
+    pads.push(b);
   }
+  hint=()=>pads[jumped];
   tell('Aita konnal hüpata. Alusta esimesest lehest.');
 }
+
+/* ---------- Jäta meelde ---------- */
 function memoryGame(x){
   const list=mix([x,...mix(words.filter(a=>a!==x)).slice(0,2)]);
   const length=round<3?2:round<8?3:4;
   const seq=[];for(let i=0;i<length;i++)seq.push(pick([0,1,2].filter(j=>j!==seq[i-1])));
   let step=0,playing=false;
-  get('stage').innerHTML='<p id="memHint"></p><div class="row" id="cards"></div><div id="repeat"></div>';
+  get('stage').innerHTML='<p id="memHint" style="font-size:20px"></p><div class="row" id="cards"></div><div id="repeat"></div>';
+  const notes=[440,554,659];
   const cards=list.map((v,i)=>btn(get('cards'),v.word,v.icon,b=>{
     if(locked||playing)return;
-    if(i!==seq[step]){retry(b);replay();return}
-    tone([440,554,659][i]);b.classList.add('ok');later(()=>b.classList.remove('ok'),220);
-    if(++step===length)win(b);else status('Õige! Veel '+(length-step)+'.');
+    if(i!==seq[step]){fail(b);later(replay,600);return}
+    tone(notes[i],0,'triangle');b.classList.add('lit');later(()=>b.classList.remove('lit'),250);
+    if(++step===length)win(b);else{stepOk();status('Õige! Veel '+(length-step)+'.')}
   },'card'));
   function replay(){
     if(locked||playing)return;
     step=0;playing=true;status('');get('memHint').textContent='👀 Vaata järjekorda';
     cards.forEach(b=>b.disabled=true);
     seq.forEach((v,i)=>{
-      later(()=>{cards[v].classList.add('lit');tone([440,554,659][v])},450+i*850);
-      later(()=>cards[v].classList.remove('lit'),1030+i*850);
+      later(()=>{cards[v].classList.add('lit');tone(notes[v],0,'triangle',.3)},500+i*850);
+      later(()=>cards[v].classList.remove('lit'),1080+i*850);
     });
-    later(()=>{
-      playing=false;cards.forEach(b=>b.disabled=false);
-      get('memHint').textContent='☝️ Puuduta samas järjekorras';tell('Nüüd on sinu kord.');
-    },450+seq.length*850);
+    later(()=>{playing=false;cards.forEach(b=>b.disabled=false);get('memHint').textContent='☝️ Puuduta samas järjekorras';tell('Nüüd on sinu kord.')},500+seq.length*850);
   }
   btn(get('repeat'),'Näita uuesti','↻ Näita uuesti',replay,'small');
   tell('Vaata, millised pildid süttivad.');replay();
 }
 
-// SVG-kaart. Pointer Events toetab hiirt, sõrme ja tahvlipliiatsit.
+/* ---------- Aardekaart ---------- */
 function mapGame(){
   const flip=Math.random()<.5;
-  const spots=[[68,165],[182,81],[305,149],[438,65],[540,142]]
-    .map(([x,y])=>({x:flip?600-x:x,y:y+Math.floor(Math.random()*31)-15}));
+  const spots=[[68,165],[182,81],[305,149],[438,65],[540,142]].map(([x,y])=>({x:flip?600-x:x,y:y+Math.floor(Math.random()*31)-15}));
   const stops=round<3?[spots[0],spots[2],spots[4]]:spots;
   const ns='http://www.w3.org/2000/svg';
-  let index=0,active=null,line=null,color='#9a442c',free=false;
-  get('stage').innerHTML=
-    '<p id="mapHint"></p><svg class="map" id="mapPaper" viewBox="0 0 600 240" aria-label="Joonistatav aardekaart">'+
-    '<rect width="600" height="240" fill="#99dce0"/>'+
+  let index=0,active=null,line=null,color='#9a442c',free=false,hue=0,count=0,last=null;
+  get('stage').innerHTML='<p id="mapHint" style="font-size:20px"></p><svg class="map" id="mapPaper" viewBox="0 0 600 240" aria-label="Joonistatav aardekaart">'+
+    '<defs><pattern id="ripples" width="40" height="20" patternUnits="userSpaceOnUse"><path d="M0 10Q10 4 20 10T40 10" fill="none" stroke="#ffffff55" stroke-width="2"/></pattern></defs>'+
+    '<rect width="600" height="240" fill="#99dce0"/><rect width="600" height="240" fill="url(#ripples)"/>'+
     '<path d="M8 135Q33 40 158 51T369 41Q489 2 577 71Q628 151 532 186T306 203Q183 228 79 209Q12 205 8 135Z" fill="#69a99b"/>'+
     '<path d="M8 125Q33 30 158 41T369 31Q489 -8 577 61Q628 141 532 176T306 193Q183 218 79 199Q12 195 8 125Z" fill="#f2dfa4"/>'+
     '<text x="26" y="40" font-size="26">🧭</text><text x="275" y="72" font-size="35">🌴</text>'+
-    '<text x="374" y="195" font-size="26">🪨</text><text x="110" y="222" font-size="25">🐟</text>'+
-    '<g id="guide"></g><g id="ink"></g><g id="marks" pointer-events="none"></g></svg>'+
-    '<div class="row" id="paintTools"></div>';
+    '<text x="374" y="195" font-size="26">🪨</text><text x="110" y="222" font-size="25">🐟</text><text x="545" y="228" font-size="22">🐙</text>'+
+    '<g id="guide"></g><g id="ink"></g><g id="marks" pointer-events="none"></g></svg><div class="row" id="paintTools"></div>';
   const paper=get('mapPaper');
-  function svg(tag,attrs){
-    const n=document.createElementNS(ns,tag);
-    for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);
-    return n;
-  }
+  function svg(tag,attrs){const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);return n}
   function mark(){
     get('marks').replaceChildren();get('guide').replaceChildren();
     if(free){get('mapHint').textContent='🎨 Joonista oma saar või meretee.';return}
     get('mapHint').textContent=index===0?'Alusta lipust ja tõmba joon mööda täppe.':'Jätka helendava märgini.';
-    const guide=svg('polyline',{points:stops.map(p=>p.x+','+p.y).join(' '),
-      fill:'none',stroke:'#9a8358','stroke-width':3,'stroke-dasharray':'4 9'});
-    get('guide').append(guide);
+    get('guide').append(svg('polyline',{points:stops.map(p=>p.x+','+p.y).join(' '),fill:'none',stroke:'#9a8358','stroke-width':3,'stroke-dasharray':'4 9'}));
     stops.forEach((p,i)=>{
-      get('marks').append(svg('circle',{cx:p.x,cy:p.y,r:i===index?20:14,
-        fill:i<index?'#b8e3ab':'#fff9de',stroke:i===index?'#b85d19':'#65897b','stroke-width':i===index?5:2}));
+      if(i===index){const halo=svg('circle',{cx:p.x,cy:p.y,r:20,fill:'none',stroke:'#ffb627','stroke-width':4});
+        halo.innerHTML='<animate attributeName="r" values="20;30;20" dur="1.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>';
+        get('marks').append(halo)}
+      get('marks').append(svg('circle',{cx:p.x,cy:p.y,r:i===index?20:14,fill:i<index?'#b8e3ab':'#fff9de',stroke:i===index?'#b85d19':'#65897b','stroke-width':i===index?5:2}));
       const t=svg('text',{x:p.x,y:p.y+7,'text-anchor':'middle','font-size':19});
       t.textContent=i===0?'⚑':i===stops.length-1?'💎':i<index?'✓':'•';get('marks').append(t);
     });
   }
-  function coords(e){
-    const p=paper.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
-    return p.matrixTransform(paper.getScreenCTM().inverse());
-  }
-  function distance(p,q){return Math.hypot(p.x-q.x,p.y-q.y)}
+  function coords(e){const p=paper.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(paper.getScreenCTM().inverse())}
+  const distance=(p,q)=>Math.hypot(p.x-q.x,p.y-q.y);
   function reset(){
     if(active!==null&&paper.hasPointerCapture(active))paper.releasePointerCapture(active);
     active=null;line=null;index=0;get('ink').replaceChildren();mark();status('');
   }
   function stroke(p){
-    line=svg('polyline',{points:p.x+','+p.y,fill:'none',stroke:color,
-      'stroke-width':free?5:6,'stroke-linecap':'round','stroke-linejoin':'round'});
-    get('ink').append(line);
+    const c=color==='rainbow'?`hsl(${hue=(hue+28)%360} 85% 52%)`:color;
+    line=svg('polyline',{points:p.x.toFixed(1)+','+p.y.toFixed(1),fill:'none',stroke:c,'stroke-width':free?6:7,'stroke-linecap':'round','stroke-linejoin':'round'});
+    get('ink').append(line);last=p;
   }
   paper.onpointerdown=e=>{
     if(locked||active!==null||e.button!==0)return;
     const p=coords(e);
-    if(!free&&distance(p,stops[Math.max(0,index-1)])>32){
-      status(index?'Jätka viimasest läbitud märgist.':'Pane sõrm lipule.');return;
-    }
-    unlock();e.preventDefault();active=e.pointerId;paper.setPointerCapture(active);
-    stroke(p);
-    if(!free&&index===0){index=1;mark();tone(410)}
+    if(!free&&distance(p,stops[Math.max(0,index-1)])>34){status(index?'Jätka viimasest läbitud märgist.':'Pane sõrm lipule ⚑.');return}
+    unlock();e.preventDefault();active=e.pointerId;paper.setPointerCapture(active);stroke(p);
+    if(!free&&index===0){index=1;mark();tone(410,0,'triangle')}
   };
   paper.onpointermove=e=>{
     if(e.pointerId!==active||locked||!line)return;
     const p=coords(e);
-    line.setAttribute('points',line.getAttribute('points')+' '+p.x.toFixed(1)+','+p.y.toFixed(1));
-    if(!free&&index<stops.length&&distance(p,stops[index])<26){
-      index++;tone(400+index*65);mark();
-      if(index===stops.length)win();
+    if(color==='rainbow'&&++count%6===0){const prev=last;stroke(prev)}
+    line.setAttribute('points',line.getAttribute('points')+' '+p.x.toFixed(1)+','+p.y.toFixed(1));last=p;
+    if(!free&&index<stops.length&&distance(p,stops[index])<28){
+      index++;tone(400+index*70,0,'triangle');mark();
+      if(index===stops.length){status('💎 Aare leitud!');const r=paper.getBoundingClientRect(),s=stops[stops.length-1];
+        confetti(r.left+s.x/600*r.width,r.top+s.y/240*r.height,40);win()}
     }
   };
-  function end(e){
-    if(e.pointerId!==active)return;
-    active=null;line=null;
-  }
+  const end=e=>{if(e.pointerId!==active)return;active=null;line=null};
   paper.onpointerup=end;paper.onpointercancel=end;paper.onlostpointercapture=end;
-  for(const [name,icon,value] of [['Pruun','🟤','#9a442c'],['Sinine','🔵','#225baf'],['Roheline','🟢','#27794b']]){
-    const b=btn(get('paintTools'),name,icon,()=>{
-      color=value;get('paintTools').querySelectorAll('.swatch').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));
-    },'swatch');
+  for(const [name,icon,value] of [['Pruun','🟤','#9a442c'],['Sinine','🔵','#225baf'],['Roheline','🟢','#27794b'],['Vikerkaar','🌈','rainbow']]){
+    const b=btn(get('paintTools'),name,icon,()=>{color=value;tone(700,0,'triangle',.08);get('paintTools').querySelectorAll('.swatch').forEach(n=>n.setAttribute('aria-pressed',String(n===b)))},'swatch');
     b.setAttribute('aria-pressed',String(value===color));
   }
   btn(get('paintTools'),'Kustuta jooned','↻ Puhasta',()=>{if(!locked)reset()},'small');
   btn(get('paintTools'),'Vaheta joonistamisviisi','🎨 Vaba joonistus',b=>{
-    if(locked)return;
-    free=!free;b.textContent=free?'🗺️ Aardetee':'🎨 Vaba joonistus';reset();
+    if(locked)return;free=!free;b.textContent=free?'🗺️ Aardetee':'🎨 Vaba joonistus';reset();
     tell(free?'Joonista sõrmega oma pilt.':'Alusta lipust ja leia aare.');
   },'small');
   mark();tell('Alusta lipust. Tõmba sõrmega joon mööda täppe aardeni.');
 }
 
-// Valikutega animafilm. Iga haru määrab järgmise stseeni ja tegevused.
+/* ---------- Hülge merefilm ---------- */
 const destinations=[
   {name:'Tuletorn',icon:'🗼',line:'Kaldal süttib tuletorni tuli.',
-    choices:[['🔦','Näita valgust','Hüljes näitab laternaga teed. Kalapaat leiab sadama!','⛵'],
-             ['🔔','Helista kella','Kell heliseb. Majakavaht lehvitab hülgele!','👋']]},
+    choices:[['🔦','Näita valgust','Hüljes näitab laternaga teed. Kalapaat leiab sadama!','⛵'],['🔔','Helista kella','Kell heliseb. Majakavaht lehvitab hülgele!','👋']]},
   {name:'Palmisaar',icon:'🏝️',line:'Saare liival paistab midagi ümmargust.',
-    choices:[['🐢','Aita kilpkonna','Hüljes saadab väikese kilpkonna lainetesse.','🐢'],
-             ['🥥','Veereta kookost','Kookos veereb vette. Krabi saab endale pisikese parve!','🦀']]},
+    choices:[['🐢','Aita kilpkonna','Hüljes saadab väikese kilpkonna lainetesse.','🐢'],['🥥','Veereta kookost','Kookos veereb vette. Krabi saab endale pisikese parve!','🦀']]},
   {name:'Koopasuu',icon:'⛰️',line:'Koopast kostab vaikne kõlin.',
-    choices:[['🎵','Laula vastu','Koobas vastab kajaga ja nahkhiir ärkab.','🦇'],
-             ['💎','Otsi läiget','Hüljes leiab veest sinise kristalli!','💎']]},
+    choices:[['🎵','Laula vastu','Koobas vastab kajaga ja nahkhiir ärkab.','🦇'],['💎','Otsi läiget','Hüljes leiab veest sinise kristalli!','💎']]},
   {name:'Linnulaid',icon:'🪺',line:'Pesast kostab piiksumist.',
-    choices:[['🪶','Vii sulg','Pehme sulg teeb linnupesa soojaks.','🐣'],
-             ['🐟','Too kala','Emalind viib kala oma pojale.','🐦']]},
+    choices:[['🪶','Vii sulg','Pehme sulg teeb linnupesa soojaks.','🐣'],['🐟','Too kala','Emalind viib kala oma pojale.','🐦']]},
   {name:'Jäälaht',icon:'🧊',line:'Valge jääpanga kõrval sulpsatab vesi.',
-    choices:[['🐋','Tervita vaala','Vaal vastab kõrge veesambaga!','🐋'],
-             ['❄️','Püüa lumehelves','Helves maandub hülge ninal. Hüljes aevastab!','❄️']]}
+    choices:[['🐋','Tervita vaala','Vaal vastab kõrge veesambaga!','🐋'],['❄️','Püüa lumehelves','Helves maandub hülge ninal. Hüljes aevastab!','❄️']]},
+  {name:'Korallriff',icon:'🪸',line:'Värviliste korallide vahel ujub kalaparv.',
+    choices:[['🫧','Puhu mulle','Mullid tõusevad ja kalad tantsivad nende ümber!','🐠'],['🐡','Tervita kerakala','Kerakala paisub ümmarguseks ja naerab!','🐡']]},
+  {name:'Laevavrakk',icon:'⚓',line:'Põhjas puhkab vana laev.',
+    choices:[['🗝️','Otsi võtit','Hüljes leiab kuldse võtme ja avab väikese kirstu!','👑'],['🐙','Kutsu kaheksajalg','Kaheksajalg lehvitab kaheksa käega!','🐙']]}
 ];
 function movieGame(){
   let phase=0;
   const routes=nextItems('filmipaigad',destinations,2);
-  const sky=pick(['☀️','🌤️','🌙']);
-  get('stage').innerHTML='<div class="movie" id="screen"><span class="sky">'+sky+'</span>'+
+  const sky=pick(night?['🌙','✨']:['☀️','🌤️','🌈']);
+  get('stage').innerHTML='<div class="movie" id="screen"><span class="sky">'+sky+'</span><span class="clap">🎬</span>'+
+    '<svg class="mwave" viewBox="0 0 800 70" preserveAspectRatio="none"><path d="M0 25Q50 0 100 25T200 25T300 25T400 25T500 25T600 25T700 25T800 25V70H0Z" fill="currentColor"/></svg>'+
     '<span class="land" id="land"></span><span class="actor" id="actor">🦭</span></div>'+
     '<p id="caption" aria-live="polite"></p><div class="row" id="filmChoices"></div>';
   function scene(icon,text,next){
-    const screen=get('screen');
-    get('filmChoices').replaceChildren();
+    const screen=get('screen');get('filmChoices').replaceChildren();
     get('land').textContent=icon;get('caption').textContent=text;tell(text);
     screen.classList.remove('play');void screen.offsetWidth;screen.classList.add('play');
     let ready=false;
-    function arrive(){
-      if(ready||locked)return;
-      ready=true;get('filmChoices').replaceChildren();next();
-    }
+    function arrive(){if(ready||locked)return;ready=true;get('filmChoices').replaceChildren();next()}
     btn(get('filmChoices'),'Liigu valikuni','⏩ Edasi',arrive,'small');
     later(arrive,3000);
   }
-  function choice(icon,name,fn){
-    btn(get('filmChoices'),name,'<span>'+icon+'</span>'+name,fn,'storybtn');
-  }
+  function choice(icon,name,fn,i=0){const b=btn(get('filmChoices'),name,'<span>'+icon+'</span>'+name,fn,'storybtn');b.style.animationDelay=(i*.12)+'s'}
   function branch(dest){
-    if(phase!==1)return;phase=2;tone(550);
+    if(phase!==1)return;phase=2;tone(550,0,'triangle');
     scene(dest.icon,dest.line,()=>{
       phase=3;
-      for(const [icon,name,ending,endIcon] of mix(dest.choices)){
-        choice(icon,name,()=>{
-          if(phase!==3)return;phase=4;tone(620);
-          scene(endIcon,ending,()=>{
-            phase=5;
-            choice('⭐','Lõpeta lugu',b=>{if(phase===5){phase=6;win(b)}});
-          });
-        });
-      }
+      mix(dest.choices).forEach(([icon,name,ending,endIcon],i)=>choice(icon,name,()=>{
+        if(phase!==3)return;phase=4;tone(620,0,'triangle');
+        scene(endIcon,ending,()=>{phase=5;choice('⭐','Lõpeta lugu',b=>{if(phase===5){phase=6;win(b)}})});
+      },i));
     });
   }
   scene('🌊','Hüljes asub mereretkele. Kuhu ta täna ujub?',()=>{
-    phase=1;
-    for(const dest of routes)choice(dest.icon,dest.name,()=>branch(dest));
+    phase=1;routes.forEach((dest,i)=>choice(dest.icon,dest.name,()=>branch(dest),i));
   });
 }
+
 home();
+later(()=>say('Tere! Mina olen Hüljes. 👋','happy'),900);
 </script>
 </body>
 </html>
