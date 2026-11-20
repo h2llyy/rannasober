@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="et">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leia rannasõber</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;color:#183f4b;font:600 1rem/1.3 system-ui,sans-serif;background:#f8eaca}
+.scene{position:fixed;inset:0;width:100%;height:100%;z-index:-1}
+main{width:min(100%,850px);margin:auto;height:100vh;height:100dvh;padding:clamp(10px,2.4vh,24px) 16px}
+section{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:clamp(7px,2vh,20px)}
+[hidden]{display:none}
+h1,h2,p{margin:0;text-align:center}
+h1,h2{font-family:Georgia,serif;font-size:clamp(32px,7vmin,68px);line-height:1.04}
+h2{font-size:clamp(24px,4.5vmin,42px)}
+button{cursor:pointer;touch-action:manipulation;color:inherit;font:inherit}
+button:focus-visible{outline:5px solid #954011;outline-offset:3px}
+.action{background:#145966;border:2px solid #103e48;border-radius:40px;padding:14px 30px;color:white;font-size:1.4rem}
+.hero{height:clamp(80px,29vh,235px);width:80%}
+#target{height:min(32vh,245px);width:min(78vw,350px);background:#fffaf0;border:3px solid #986d46;border-radius:48% 48% 30% 30%;padding:8px}
+.art{display:block;width:100%;height:100%}
+.choices{display:flex;width:100%;justify-content:center;gap:clamp(8px,2vw,22px)}
+.card{background:#fffdf6;border:3px solid #406a70;border-radius:24px;width:min(30%,200px);height:min(26vh,175px);padding:5px;box-shadow:0 4px 0 #b8a880}
+.card.correct{border:6px solid #367650;background:#e8f4dc}
+#target.hint{outline:5px solid #c68137}
+.shells{display:flex;align-items:center;justify-content:center;gap:4px;max-width:100%}
+.shells svg{width:clamp(26px,5vmin,48px);height:clamp(26px,5vmin,48px)}
+.empty{opacity:.23;filter:grayscale(1)}
+</style>
+<svg class="scene" aria-hidden="true" viewBox="0 0 1000 800" preserveAspectRatio="none">
+<rect width="1000" height="800" fill="#ecf6f1"/><circle cx="850" cy="125" r="52" fill="#f3d9a1"/>
+<path d="M0 460Q210 435 390 461T780 455T1050 455V800H0Z" fill="#a8d7cf"/>
+<path d="M0 558Q260 500 510 565T1020 532V800H0Z" fill="#eff9ea"/>
+<path d="M0 567Q260 509 510 574T1020 541V800H0Z" fill="#f5e5c4"/></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="seal" viewBox="0 0 120 90"><g fill="#9bb6bf" stroke="#304f60" stroke-width="2.5"><path d="M18 60Q6 56 5 45Q14 44 24 53Q22 42 29 40L33 52Q60 47 67 31Q68 10 90 12Q111 12 111 32Q117 48 99 53Q88 76 57 77Q35 78 18 60Z"/><path d="M66 61Q60 74 75 82Q84 81 83 65"/></g><ellipse cx="104" cy="38" rx="8" ry="6" fill="#e1e9e3"/><circle cx="95" cy="29" r="3"/><circle cx="110" cy="35" r="2.6"/><path d="m100 40-12 1m13 2-10 4" stroke="#304f60" fill="none"/></symbol>
+<symbol id="gull" viewBox="0 0 120 90"><g stroke="#3b5560" stroke-width="2.5"><path d="m8 47 24 2Q43 48 54 43L46 13Q64 18 77 40Q88 23 99 33Q107 40 95 50Q82 68 55 65Q30 65 8 47Z" fill="#fffdf3"/><path d="M70 53Q51 57 26 29Q54 30 77 44" fill="#9db3bd"/><path d="m99 37 15 5-15 3" fill="#e8aa45"/></g><circle cx="95" cy="36" r="2"/></symbol>
+<symbol id="fish" viewBox="0 0 120 90"><g stroke="#245b63" stroke-width="3"><path d="m31 46-23-18v36l23-14Q58 5 107 45Q74 86 31 50Z" fill="#59b5aa"/><path d="M72 28Q61 45 74 62M54 43l-12 10" fill="none"/></g><circle cx="87" cy="40" r="4"/></symbol>
+<symbol id="crab" viewBox="0 0 120 90"><g stroke="#873e33" stroke-width="4" fill="none" stroke-linecap="round"><path d="m38 52-20 1-9 10m30-3-17 4-6 10m66-22 20 1 9 10m-29-3 17 4 6 10"/><path d="M40 48Q26 47 21 31m60 17q14-1 19-17"/></g><g fill="#e97852" stroke="#873e33" stroke-width="2.5"><path d="M28 34Q7 39 7 14l11 9 5-14Q37 22 28 34Zm64 0q21 5 21-20l-11 9-5-14Q83 22 92 34Z"/><ellipse cx="60" cy="53" rx="29" ry="19"/></g><g fill="#253f49"><circle cx="49" cy="36" r="4"/><circle cx="71" cy="36" r="4"/></g><path d="M53 56q7 6 14 0" fill="none" stroke="#873e33" stroke-width="2.5"/></symbol>
+<symbol id="boat" viewBox="0 0 120 90"><g stroke="#334f5c" stroke-width="2.5" stroke-linejoin="round"><path d="M61 9v54" fill="none"/><path d="M54 14 17 53h37Z" fill="#f3ae65"/><path d="m67 16 31 37H67Z" fill="#fff8d8"/><path d="M9 61h103L94 77H28Z" fill="#447b91"/></g></symbol>
+<symbol id="shell" viewBox="0 0 120 90"><path d="M51 75 15 49Q5 36 22 32Q18 19 34 19Q37 7 50 14Q60 2 70 14Q83 7 87 20Q103 19 99 33Q117 36 106 50L69 75l2 5H49Z" fill="#e6a184" stroke="#875648" stroke-width="3"/><path d="m58 70-32-37m33 36L40 22m21 46V18m3 51 18-46m-16 47 29-36" fill="none" stroke="#b17461" stroke-width="2.5"/></symbol>
+</defs></svg>
+<main>
+<section id="home"><h1>Leia rannasõber</h1><svg class="hero" aria-hidden="true"><use href="#seal"/></svg><button class="action" id="start">▶ Mängi</button></section>
+<section id="game" hidden><h2>Leia sama pilt</h2><div id="target"></div><div class="choices" id="choices"></div><div class="shells" id="progress"></div></section>
+<section id="end" hidden><h2>Kõik kuus merekarpi!</h2><svg class="hero" aria-hidden="true"><use href="#seal"/></svg><div class="shells" id="collection"></div><button class="action" id="again">↻ Mängi uuesti</button></section>
+</main>
+<script>
+const names = {seal:'Hüljes', gull:'Kajakas', fish:'Kala', crab:'Krabi', boat:'Purjekas', shell:'Merekarp'};
+const ids = Object.keys(names);
+const el = id => document.getElementById(id);
+let order, round, previousSlot, locked, hintTimer;
+function shuffled(items) {
+  const result = [...items];
+  for (let i=result.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [result[i],result[j]]=[result[j],result[i]];
+  }
+  return result;
+}
+function art(id) {
+  return '<svg class="art" aria-hidden="true" viewBox="0 0 120 90"><use href="#'+id+'"/></svg>';
+}
+function shells(container, count) {
+  container.innerHTML = '';
+  container.setAttribute('role','img');
+  container.setAttribute('aria-label','Kogutud '+count+' merekarpi kuuest');
+  for(let i=0;i<6;i++) {
+    container.insertAdjacentHTML('beforeend',art('shell'));
+    if(i>=count) container.lastElementChild.classList.add('empty');
+  }
+}
+function screen(id) {
+  for(const name of ['home','game','end']) el(name).hidden=name!==id;
+}
+function play() {
+  order=shuffled(ids); round=0; previousSlot=-1;
+  screen('game'); draw();
+}
+function draw() {
+  locked=false;
+  clearTimeout(hintTimer);
+  const target=order[round];
+  const count=round<3?2:3;
+  const slots=Array.from({length:count},(_,i)=>i);
+  const slot=shuffled(slots.filter(i=>i!==previousSlot))[0];
+  previousSlot=slot;
+  const options=shuffled(ids.filter(id=>id!==target)).slice(0,count-1);
+  options.splice(slot,0,target);
+  el('target').classList.remove('hint');
+  el('target').setAttribute('role','img');
+  el('target').setAttribute('aria-label','Leia sama pilt. '+names[target]);
+  el('target').innerHTML=art(target);
+  shells(el('progress'),round);
+  el('choices').replaceChildren();
+  for(const id of options) {
+    const button=document.createElement('button');
+    button.className='card';
+    button.setAttribute('aria-label',names[id]);
+    button.innerHTML=art(id);
+    button.onclick=()=>{
+      if(locked) return;
+      if(id!==target) {
+        clearTimeout(hintTimer);
+        el('target').classList.add('hint');
+        hintTimer=setTimeout(()=>el('target').classList.remove('hint'),700);
+        return;
+      }
+      locked=true;
+      button.classList.add('correct');
+      shells(el('progress'),++round);
+      setTimeout(()=>{
+        if(round<ids.length) draw();
+        else {shells(el('collection'),round); screen('end'); el('again').focus();}
+      },950);
+    };
+    el('choices').append(button);
+  }
+}
+el('start').onclick=play;
+el('again').onclick=play;
+</script>
+</html>
