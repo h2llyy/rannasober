@@ -3,572 +3,612 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#aee7e3">
-<title>Rannasõbra mängusaar</title>
+<meta name="theme-color" content="#96dedf">
+<title>Rannasõbra aardesaar</title>
 <style>
 :root {
-  --ink: #193e48;
-  --teal: #237b79;
-  --cream: #fffaf0;
-  --edge: #c9ab7d;
+  --ink:#173f4c; --edge:#ba9871; --cream:#fff8e6;
+  --sea:#138485; --gold:#ffe38a;
 }
-* { box-sizing: border-box }
+* { box-sizing:border-box }
 body {
-  min-height: 100vh;
-  min-height: 100dvh;
-  margin: 0;
-  color: var(--ink);
-  font: 650 17px/1.35 system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 85% 12%, #fff8cc 0 3.5vmin, transparent 3.7vmin),
-    linear-gradient(170deg, transparent 0 60%, #ffffff50 60.2% 60.8%, transparent 61%),
-    linear-gradient(#bcebea 0%, #def7ed 54%, #92d8d1 54.2%, #bfe9df 69%, #f5dfb5 69.3%, #fff0cf);
+  margin:0; min-height:100vh; min-height:100dvh;
+  font:650 17px/1.35 system-ui,sans-serif; color:var(--ink);
+  background:#bde9e6; isolation:isolate;
 }
-main { width: min(94%, 880px); margin: auto; padding: 14px 0 28px; text-align: center }
-h1, h2, p { margin: 0 }
-h1, h2 { font-family: Georgia, serif; line-height: 1.1; text-wrap: balance }
-h1 { font-size: clamp(36px, 6vw, 64px) }
-h2 { font-size: clamp(25px, 4vw, 40px) }
+button,select { font:inherit; color:inherit }
 button {
-  font: inherit; color: inherit; cursor: pointer; touch-action: manipulation;
-  min-height: 48px; border: 2px solid #47716d; border-radius: 20px;
-  padding: .55em .85em;
-  background: linear-gradient(155deg, #fffef9, #fff4d8);
-  box-shadow: inset 0 3px 0 #ffffffda, 0 5px 0 var(--edge), 0 8px 14px #214a511a;
-  transition: transform .12s, box-shadow .12s, background .15s;
+  background:linear-gradient(155deg,#fffefa,#ffefc9);
+  border:2px solid #47716d; border-radius:17px;
+  min-height:48px; padding:8px 14px; cursor:pointer;
+  box-shadow:inset 0 3px 1px #fffd,0 5px 0 var(--edge),0 8px 15px #19465424;
+  touch-action:manipulation; transition:transform .13s,box-shadow .13s;
 }
 button:active:not(:disabled) {
-  transform: translateY(4px) scale(.97);
-  box-shadow: inset 0 2px 3px #8e73452c, 0 1px 0 var(--edge);
+  transform:translateY(4px) scale(.97);
+  box-shadow:inset 0 2px 3px #896c4433,0 1px 0 var(--edge);
 }
-button:focus-visible { outline: 4px solid #905013; outline-offset: 3px }
-button:disabled { cursor: default }
-header, .row, .slots, .tools, .trail {
-  display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px;
+button:focus-visible,select:focus-visible { outline:4px solid #ad5418;outline-offset:3px }
+button:disabled { cursor:default }
+main { width:min(94%,900px); margin:auto; padding:14px 0 86px; text-align:center }
+h1,h2 { margin:.25em 0; font-family:Georgia,serif; line-height:1.08; text-wrap:balance }
+h1 { font-size:clamp(35px,6.8vw,66px); text-shadow:0 2px #fff9 }
+h2 { font-size:clamp(25px,4.3vw,40px) }
+p { margin:.45em 0 }
+header,.row,.tools,.slots {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
 }
-header { justify-content: space-between; margin-bottom: 15px }
-.tools { gap: 7px }
-.small { font-size: 16px; padding: 8px 13px }
-.hero { margin: 12px auto 18px }
-.mascot { font-size: clamp(56px, 10vmin, 92px); display: inline-block; line-height: 1.25 }
-.menu {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 15px; margin: 20px auto;
+header { justify-content:space-between; margin-bottom:12px }
+.small { font-size:16px; padding:7px 12px }
+select { padding:8px; border:2px solid #66958d; border-radius:12px; background:#fffbee }
+.seascape {
+  position:fixed; inset:0; overflow:hidden; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(circle at 81% 13%,#fff5b4 0 4vmin,#fff1ad70 4.2vmin,transparent 11vmin),
+    linear-gradient(#9bdeeb,#e0f6ee 53%,#71cccc 53.1%,#219aa5 77%,#f0d39d 77.2%,#fff2cd);
 }
-.menu button { min-height: 115px; padding: 10px 5px }
-.icon { display: block; font-size: clamp(33px, 6vmin, 54px); line-height: 1.2; margin-bottom: 5px }
-.emoji, .icon, .mascot { filter: drop-shadow(0 3px 1px #674f3e30) }
-.sheet {
-  border-radius: 28px; border: 2px solid #ffffffcf; margin: 12px auto;
-  padding: clamp(12px, 2.5vw, 24px);
-  background: #fffaf0e8; box-shadow: 0 9px 22px #34666c21;
+.cloud { position:absolute; left:7%; top:8%; font-size:clamp(40px,7vw,85px); opacity:.8; animation:drift 18s ease-in-out infinite alternate }
+@keyframes drift { to { transform:translateX(13vw) } }
+.wave { position:absolute; left:-25%; width:150%; height:12%; animation:swell 8s ease-in-out infinite alternate }
+.wave.one { top:58%; color:#91e4df }
+.wave.two { top:67%; color:#c8f2e7; animation: swell 6s ease-in-out infinite alternate-reverse }
+@keyframes swell { to { transform:translate(8%,6px) } }
+#beachCrab {
+  position:fixed; z-index:2; bottom:4px; left:1%; min-width:54px;
+  background:none; border:0; box-shadow:none; padding:0;
+  font-size:36px; filter:drop-shadow(0 3px 2px #62432155);
+  animation:scuttle 23s ease-in-out infinite alternate;
 }
-.stage { display: grid; justify-items: center; gap: clamp(10px, 2vh, 18px) }
-.sample { min-width: 100px; font-size: clamp(50px, 11vmin, 90px); line-height: 1.15 }
-.card { min-width: clamp(62px, 14vw, 118px); font-size: clamp(34px, 7vmin, 64px); padding: 6px 12px }
-.tile { min-width: 52px; font-size: clamp(25px, 5vmin, 39px); padding: 5px 12px }
-.slot {
-  display: grid; place-items: center; min-width: 32px; height: 45px;
-  border-bottom: 4px solid #afbaa8; font-size: clamp(22px, 4vw, 33px); color: #788980;
+@keyframes scuttle { 0%,8%{left:1%} 43%{left:39%} 49%{left:39%} 92%,100%{left:calc(99% - 55px)} }
+#beachCrab span { display:block }
+#beachCrab.dance span { animation:dance .48s ease-in-out 2 }
+@keyframes dance { 30%{transform:translateY(-13px) rotate(12deg)} 65%{transform:rotate(-12deg)} }
+.hero { display:block; font-size:clamp(50px,9vmin,83px); line-height:1.15; margin:auto; filter:drop-shadow(0 5px 2px #416e7133) }
+.menu { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin:18px auto }
+.menu button { min-height:100px; font-size:clamp(15px,2vw,18px); padding:9px 5px }
+.icon { display:block; font-size:clamp(32px,5.5vmin,48px); filter:drop-shadow(0 3px 1px #604d3133) }
+.panel {
+  background:linear-gradient(145deg,#fffdf4f7,#fff5e3f2); border:2px solid #fff9;
+  box-shadow:inset 0 3px #fff,0 8px 0 #c6b39275,0 15px 25px #29565b24;
+  border-radius:27px; padding:clamp(12px,2.4vw,25px); margin:12px auto;
 }
-.slot.next { background: #fff0b7; border-color: #b66a24; border-radius: 8px 8px 0 0 }
-.slot.filled { color: #236449; border-color: #55a47a }
-.used { visibility: hidden }
-.ok, .found, .lit { background: linear-gradient(#f6ffcf, #a4e7ac); border-color: #39895b }
-.lit { outline: 5px solid #ffbc37; transform: translateY(-4px) scale(1.05) }
-.hint { animation: nudge .38s ease-in-out }
-@keyframes nudge { 30% { transform: rotate(-4deg) } 70% { transform: rotate(4deg) } }
-#status { min-height: 1.5em; margin-top: 12px; color: #275b54 }
-.progress { font-size: 17px; white-space: nowrap }
-.pair { display: flex; gap: clamp(5px, 2vw, 16px); justify-content: center; width: 100% }
-.picture, .board { display: grid; grid-template-columns: repeat(2, 1fr); overflow: hidden }
-.picture { width: min(44%, 220px); border: 3px solid #6f9289; border-radius: 16px; background: #edf6df }
-.spot {
-  min-width: 0; min-height: 48px; aspect-ratio: 1.25; border: 1px solid #d5dfc9;
-  border-radius: 0; box-shadow: none; padding: 0; font-size: clamp(24px, 6.5vmin, 50px);
-}
-.board { width: min(52vw, 29vh, 225px); aspect-ratio: 1; border: 3px solid #4e776d; border-radius: 15px }
-.cell { min-width: 0; min-height: 0; border: 1px dashed #88a19a; overflow: hidden; background: white }
-.cell svg { opacity: .22 }
-.cell.placed svg { opacity: 1 }
-.cell.active { outline: 4px dashed #ab652c; outline-offset: -5px }
-.piece { width: clamp(50px, 15vw, 90px); aspect-ratio: 1; padding: 0; overflow: hidden }
-.piece svg, .cell svg { display: block; width: 100%; height: 100% }
-.pond {
-  display: flex; gap: 6px; justify-content: center; align-items: end;
-  width: min(100%, 520px); padding: 18px 8px 10px; border-radius: 23px;
-  background: linear-gradient(#d2f3f5, #9bdbde);
-}
-.pad {
-  position: relative; flex: 1; max-width: 80px; height: 52px; padding: 3px;
-  border-radius: 52% 47% 44% 48%; border-color: #45754b;
-  background: linear-gradient(#d3ec8f, #8cca76); --edge: #759e68;
-}
-.pad .frog { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 30px }
-.count { font-size: clamp(32px, 7vmin, 58px); letter-spacing: 3px }
-.spark {
-  position: fixed; pointer-events: none; z-index: 4; left: 50%; top: 45%;
-  animation: sparkle .75s ease-out forwards; font-size: 25px;
-}
-@keyframes sparkle {
-  from { transform: translate(-50%, 0) scale(.5); opacity: 1 }
-  to { transform: translate(var(--dx), var(--dy)) scale(1.1); opacity: 0 }
-}
-@media (max-width: 630px) {
-  .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
-  .menu button { min-height: 82px }
-  .slots { gap: 4px }
-}
-@media (max-height: 520px) {
-  main { padding-top: 6px }
-  .hero { margin: 4px auto }
-  .menu button { min-height: 66px }
-  .mascot { font-size: 40px }
-  .stage { gap: 6px }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important }
-  .spark { display: none }
+.stage { display:grid; gap:clamp(8px,2vh,17px); justify-items:center }
+.sample { font-size:clamp(48px,11vmin,88px); line-height:1.16 }
+.card { min-width:clamp(62px,13vw,120px); font-size:clamp(34px,7vmin,60px); padding:5px 12px }
+.tile { min-width:48px; font-size:clamp(24px,4.5vmin,38px); padding:5px 11px }
+.slot { min-width:28px; font-size:clamp(21px,4.3vw,36px); border-bottom:4px solid #aeb8a6; color:#72857c }
+.slot.next { background:#ffe9ac; border-color:#b16626 }
+.slot.filled { background:#d9f3c9; border-color:#4c9966; color:#285a43 }
+.used { visibility:hidden }
+.ok,.found,.lit { background:linear-gradient(#fbffcd,#aae6b2); border-color:#43825a }
+.lit { outline:5px solid #e5991e; transform:translateY(-4px) }
+#status { min-height:1.4em; color:#295e54 }
+.hint { animation:wiggle .32s ease-in-out }
+@keyframes wiggle { 30%{transform:rotate(-4deg)} 70%{transform:rotate(4deg)} }
+.pair { display:flex; width:100%; justify-content:center; gap:10px }
+.picture,.board { display:grid; grid-template-columns:repeat(2,1fr); overflow:hidden; border:3px solid #698b7e; border-radius:15px }
+.picture { width:min(44%,210px) }
+.spot { min-width:0; aspect-ratio:1.3; border:1px solid #d5dfc9; border-radius:0; box-shadow:none; padding:0; font-size:clamp(28px,6vmin,50px) }
+.board { width:min(52vw,30vh,220px); aspect-ratio:1 }
+.cell { min-width:0; min-height:0; background:white; border:1px dashed #9aa799 }
+.cell svg { opacity:.22 }
+.cell.active { outline:4px dashed #b9651d; outline-offset:-5px }
+.cell.placed svg { opacity:1 }
+.piece { width:clamp(52px,15vw,88px); aspect-ratio:1; padding:0; overflow:hidden }
+.cell svg,.piece svg { width:100%; height:100%; display:block }
+.pond { display:flex; width:min(100%,520px); justify-content:center; gap:5px; background:#a3dfe2; padding:25px 6px 12px; border-radius:25px }
+.pad { position:relative; flex:1; max-width:76px; padding:3px; border-radius:50%; background:linear-gradient(#d5ef91,#85c67b) }
+.frog { position:absolute; left:50%; top:-25px; transform:translateX(-50%); font-size:30px }
+.map,.movie { width:min(100%,680px); border-radius:20px; overflow:hidden; border:3px solid #578c89; background:#b9e8e4 }
+.map { display:block; touch-action:none; user-select:none; -webkit-user-select:none; cursor:crosshair }
+.movie { position:relative; aspect-ratio:2.2; min-height:145px; background:linear-gradient(#a7dfec,#ecf9e9 55%,#86d5ce 56%,#3a99aa) }
+.movie .land { position:absolute; bottom:15%; right:7%; font-size:clamp(47px,9vw,95px); filter:drop-shadow(0 6px 2px #365b5c55) }
+.movie .actor { position:absolute; bottom:12%; left:5%; font-size:clamp(37px,7vw,72px); }
+.movie.play .actor { animation:voyage 2.8s ease-in-out forwards }
+@keyframes voyage { 0%{left:5%;transform:rotate(-7deg)} 40%{transform:translateY(-8px) rotate(4deg)} 100%{left:55%;transform:rotate(-3deg)} }
+.movie .sky { position:absolute; top:5%; left:9%; font-size:clamp(27px,6vw,48px) }
+.storybtn { min-width:110px }
+.storybtn span { display:block; font-size:36px }
+.swatch { min-width:49px; font-size:22px }
+[aria-pressed="true"].swatch { outline:3px solid #396b70; outline-offset:2px }
+.spark { position:fixed; z-index:4; pointer-events:none; left:50%; top:43%; animation:burst .7s ease-out forwards; font-size:24px }
+@keyframes burst { to { transform:translate(var(--x),var(--y)); opacity:0 } }
+@media(max-width:720px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){.menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.slots{gap:4px}.tools{gap:5px}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after { animation:none!important; transition:none!important }
+  .movie.play .actor { left:55% }
+  .spark { display:none }
 }
 </style>
 </head>
 <body>
+<div class="seascape" aria-hidden="true">
+  <span class="cloud">☁️</span>
+  <svg class="wave one" viewBox="0 0 800 70" preserveAspectRatio="none">
+    <path d="M0 25Q50 0 100 25T200 25T300 25T400 25T500 25T600 25T700 25T800 25V70H0Z" fill="currentColor"/>
+  </svg>
+  <svg class="wave two" viewBox="0 0 800 70" preserveAspectRatio="none">
+    <path d="M0 23Q50 47 100 23T200 23T300 23T400 23T500 23T600 23T700 23T800 23V70H0Z" fill="currentColor"/>
+  </svg>
+</div>
+<button id="beachCrab" aria-label="Tervita rannakrabi"><span>🦀</span></button>
 <main id="app"></main>
 <script>
 'use strict';
 
-// Igal real on sõna, pilt ja teema. Siia saab sõnu juurde lisada.
-const data = [
-  ['KALA','🐟','meri'], ['KRABI','🦀','meri'], ['HÜLJES','🦭','meri'],
-  ['VAAL','🐋','meri'], ['HAI','🦈','meri'], ['DELFIIN','🐬','meri'],
-  ['KARP','🐚','meri'], ['PAAT','⛵','meri'], ['LAEV','🚢','meri'],
-  ['KASS','🐱','loom'], ['KOER','🐶','loom'], ['KARU','🐻','loom'],
-  ['REBANE','🦊','loom'], ['JÄNES','🐰','loom'], ['SIIL','🦔','loom'],
-  ['ORAV','🐿️','loom'], ['KONN','🐸','loom'], ['TIGU','🐌','loom'],
-  ['SIGA','🐷','talu'], ['LEHM','🐮','talu'], ['LAMMAS','🐑','talu'],
-  ['HOBUNE','🐴','talu'], ['KANA','🐔','talu'], ['TIBU','🐥','talu'],
-  ['PART','🦆','talu'], ['KITS','🐐','talu'], ['KUKK','🐓','talu'],
-  ['ÕUN','🍎','toit'], ['PIRN','🍐','toit'], ['PLOOM','🟣','toit'],
-  ['BANAAN','🍌','toit'], ['SIDRUN','🍋','toit'], ['KIRSS','🍒','toit'],
-  ['MAASIKAS','🍓','toit'], ['PORGAND','🥕','toit'], ['KURK','🥒','toit'],
-  ['PÄIKE','☀️','loodus'], ['KUU','🌙','loodus'], ['TÄHT','⭐','loodus'],
-  ['PILV','☁️','loodus'], ['PUU','🌳','loodus'], ['LILL','🌷','loodus'],
-  ['LEHT','🍁','loodus'], ['SEEN','🍄','loodus'], ['VIHM','🌧️','loodus'],
-  ['AUTO','🚗','sõiduk'], ['BUSS','🚌','sõiduk'], ['RONG','🚂','sõiduk']
-].map(([word, icon, group]) => ({word, icon, group}));
-
-// Ploomi jaoks joonistame viljale ka varre ja lehe.
-function picture(item) {
-  if (item.word === 'PLOOM') {
-    return '<svg aria-hidden="true" viewBox="0 0 100 100" style="width:1em;height:1em;vertical-align:-.08em">' +
-      '<ellipse cx="49" cy="61" rx="29" ry="33" fill="#79589c"/>' +
-      '<ellipse cx="38" cy="52" rx="7" ry="12" fill="#bba0cb"/>' +
-      '<path d="M50 31q0-12 9-21" fill="none" stroke="#705234" stroke-width="5"/>' +
-      '<path d="M54 23q-19-19-28-9 10 14 28 9" fill="#62895a"/></svg>';
-  }
-  return item.icon;
-}
+// 50 sõna. Igal sõnal on oma pilt.
+const words = [
+  ['KALA','🐟'],['KRABI','🦀'],['HÜLJES','🦭'],['VAAL','🐋'],['HAI','🦈'],
+  ['DELFIIN','🐬'],['KARP','🐚'],['PAAT','⛵'],['LAEV','🚢'],['KAHEKSAJALG','🐙'],
+  ['KASS','🐱'],['KOER','🐶'],['KARU','🐻'],['REBANE','🦊'],['JÄNES','🐰'],
+  ['SIIL','🦔'],['ORAV','🐿️'],['KONN','🐸'],['TIGU','🐌'],['ÖÖKULL','🦉'],
+  ['SIGA','🐷'],['LEHM','🐮'],['LAMMAS','🐑'],['HOBUNE','🐴'],['KANA','🐔'],
+  ['TIBU','🐥'],['PART','🦆'],['KITS','🐐'],['KUKK','🐓'],['MESILANE','🐝'],
+  ['ÕUN','🍎'],['PIRN','🍐'],['BANAAN','🍌'],['SIDRUN','🍋'],['KIRSS','🍒'],
+  ['MAASIKAS','🍓'],['PORGAND','🥕'],['KURK','🥒'],['MUNA','🥚'],['LEIB','🍞'],
+  ['PÄIKE','☀️'],['KUU','🌙'],['TÄHT','⭐'],['PILV','☁️'],['PUU','🌳'],
+  ['LILL','🌷'],['SEEN','🍄'],['AUTO','🚗'],['BUSS','🚌'],['RONG','🚂']
+].map(([word,icon])=>({word,icon}));
 
 const games = {
-  match: ['🦭','Leia sama pilt', matching],
-  letter: ['🔠','Leia sama täht', letters],
-  word: ['🧱','Lao sõna', spelling],
-  puzzle: ['🧩','Pane pusle kokku', puzzle],
-  diff: ['🔎','Leia erinevused', differences],
-  count: ['🐸','Konna hüpped', counting],
-  memory: ['✨','Jäta meelde', memory],
-  first: ['🎒','Leia algustäht', firstLetter]
+  match:['🦭','Leia sama pilt',matchGame],
+  letters:['🔠','Leia sama täht',letterGame],
+  spell:['🧱','Lao sõna',spellGame],
+  puzzle:['🧩','Pane pusle kokku',puzzleGame],
+  diff:['🔎','Leia erinevused',diffGame],
+  frog:['🐸','Konna hüpped',frogGame],
+  memory:['✨','Jäta meelde',memoryGame],
+  initial:['🎒','Leia algustäht',initialGame],
+  map:['🗺️','Joonista aardekaart',mapGame],
+  movie:['🎬','Hülge merefilm',movieGame]
 };
 
-const app = document.getElementById('app');
-const get = id => document.getElementById(id);
-const alphabet = [...new Set(data.flatMap(item => [...item.word]))];
-const bags = new Map();
-const timers = new Set();
-const total = 8;
-let mode, deck, round, locked, voicePrompt = '';
-let soundOn = true, audio, homeVisit = 0;
-let memoryPlaying = false;
-let earned = 0;
-try { earned = Number(localStorage.getItem('rannasober-stars')) || 0 } catch {}
+const get = id=>document.getElementById(id);
+const app = get('app');
+const alphabet = [...new Set(words.flatMap(x=>[...x.word]))];
+const bags = new Map(), timers = new Set();
+let game,deck,round,rounds=16,locked=false,voiceText='',sound=true,audio;
+let stars=0;
+try { stars=Number(localStorage.getItem('rannasober-stars'))||0 } catch {}
 
-function shuffle(list) {
-  const copy = [...list];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
+function mix(items){
+  const a=[...items];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
   }
-  return copy;
+  return a;
 }
-
-// Iga mäng mäletab sama lehekülastuse jooksul kasutatud pilte.
-function drawDeck(key, pool, size) {
-  let bag = bags.get(key) || [];
-  const result = [];
-  while (result.length < size) {
-    if (!bag.length) {
-      const remaining = shuffle(pool.filter(x => !result.includes(x)));
-      bag = [...shuffle(pool.filter(x => result.includes(x))), ...remaining];
+function pick(items){return items[Math.floor(Math.random()*items.length)]}
+function nextItems(key,pool,count){
+  let bag=bags.get(key)||[];
+  const result=[];
+  while(result.length<count){
+    if(!bag.length){
+      bag=[...mix(pool.filter(x=>result.includes(x))),...mix(pool.filter(x=>!result.includes(x)))];
     }
     result.push(bag.pop());
   }
-  bags.set(key, bag);
+  bags.set(key,bag);
   return result;
 }
-function later(action, delay) {
-  const id = setTimeout(() => { timers.delete(id); action() }, delay);
+function later(fn,ms){
+  const id=setTimeout(()=>{timers.delete(id);fn()},ms);
   timers.add(id);
 }
-function cancelPending() {
-  timers.forEach(clearTimeout);
-  timers.clear();
-  memoryPlaying = false;
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
+function cancel(){
+  timers.forEach(clearTimeout);timers.clear();
+  if('speechSynthesis' in window) speechSynthesis.cancel();
 }
-function unlockAudio() {
-  if (!soundOn) return;
-  try {
-    const Audio = window.AudioContext || window.webkitAudioContext;
-    if (!Audio) return;
-    if (!audio) audio = new Audio();
-    if (audio.state === 'suspended') audio.resume().catch(() => {});
-  } catch {}
+function unlock(){
+  if(!sound)return;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C)return;
+    if(!audio)audio=new C();
+    if(audio.state==='suspended')audio.resume().catch(()=>{});
+  }catch{}
 }
-function tone(freq = 440, duration = .12, offset = 0) {
-  if (!soundOn || !audio || audio.state !== 'running') return;
-  const start = audio.currentTime + offset;
-  const osc = audio.createOscillator(), gain = audio.createGain();
-  osc.type = 'sine';
-  osc.frequency.value = freq;
-  gain.gain.setValueAtTime(.001, start);
-  gain.gain.exponentialRampToValueAtTime(.085, start + .018);
-  gain.gain.exponentialRampToValueAtTime(.001, start + duration);
-  osc.connect(gain); gain.connect(audio.destination);
-  osc.start(start); osc.stop(start + duration + .02);
-  osc.onended = () => { osc.disconnect(); gain.disconnect() };
+function tone(hz=480,delay=0){
+  if(!sound||!audio||audio.state!=='running')return;
+  const t=audio.currentTime+delay;
+  const o=audio.createOscillator(),g=audio.createGain();
+  o.frequency.value=hz;o.type='sine';
+  g.gain.setValueAtTime(.001,t);
+  g.gain.exponentialRampToValueAtTime(.07,t+.02);
+  g.gain.exponentialRampToValueAtTime(.001,t+.18);
+  o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.2);
+  o.onended=()=>{o.disconnect();g.disconnect()};
 }
-function estonianVoice() {
-  if (!('speechSynthesis' in window)) return null;
-  return speechSynthesis.getVoices().find(v => /^et(?:[-_]|$)/i.test(v.lang));
-}
-function speak(text) {
-  if (!soundOn || !text) return false;
-  const voice = estonianVoice();
-  if (!voice) return false;
+function speak(text){
+  if(!text||!sound||!('speechSynthesis' in window))return false;
+  const v=speechSynthesis.getVoices().find(v=>/^et(?:[-_]|$)/i.test(v.lang));
+  if(!v)return false;
   speechSynthesis.cancel();
-  const line = new SpeechSynthesisUtterance(text);
-  line.voice = voice; line.lang = 'et-EE'; line.rate = .82;
-  speechSynthesis.speak(line);
-  return true;
+  const line=new SpeechSynthesisUtterance(text);
+  line.voice=v;line.lang='et-EE';line.rate=.84;
+  speechSynthesis.speak(line);return true;
 }
-if ('speechSynthesis' in window) speechSynthesis.getVoices();
-function tell(text) {
-  voicePrompt = text;
-  speak(text);
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+function tell(text){voiceText=text;speak(text)}
+function status(text){if(get('status'))get('status').textContent=text}
+function btn(parent,label,html,action,css=''){
+  const b=document.createElement('button');
+  b.type='button';b.className=css;b.setAttribute('aria-label',label);
+  b.innerHTML=html;b.onclick=()=>{unlock();action(b)};
+  parent.append(b);return b;
 }
-function status(text) {
-  const node = get('status');
-  if (node) node.textContent = text;
+function retry(b,text='Proovi veel.'){
+  b.classList.remove('hint');void b.offsetWidth;b.classList.add('hint');
+  tone(300);status(text);
 }
-function button(parent, label, html, action, css = '') {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = css;
-  b.setAttribute('aria-label', label);
-  b.innerHTML = html;
-  b.onclick = () => { unlockAudio(); action(b) };
-  parent.append(b);
-  return b;
-}
-function bump(b) {
-  b.classList.remove('hint');
-  void b.offsetWidth;
-  b.classList.add('hint');
-  tone(300, .09);
-}
-function sparkle() {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  for (let i = 0; i < 7; i++) {
-    const s = document.createElement('span');
-    s.className = 'spark'; s.textContent = i % 2 ? '✦' : '⭐';
-    s.setAttribute('aria-hidden', 'true');
-    const angle = Math.PI * 2 * i / 7;
-    s.style.setProperty('--dx', Math.cos(angle) * 90 + 'px');
-    s.style.setProperty('--dy', Math.sin(angle) * 70 - 30 + 'px');
-    document.body.append(s);
-    setTimeout(() => s.remove(), 800);
+function celebrate(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  for(let i=0;i<7;i++){
+    const s=document.createElement('span');s.className='spark';
+    s.textContent=i%2?'✦':'⭐';s.setAttribute('aria-hidden','true');
+    const angle=Math.PI*2*i/7;
+    s.style.setProperty('--x',Math.cos(angle)*95+'px');
+    s.style.setProperty('--y',Math.sin(angle)*70-30+'px');
+    document.body.append(s);setTimeout(()=>s.remove(),760);
   }
 }
-function controls(parent, withReplay) {
-  const sound = button(parent, 'Mänguheli', '', b => {
-    soundOn = !soundOn;
-    if (soundOn) { unlockAudio(); tone(520); speak(voicePrompt) }
-    else if ('speechSynthesis' in window) speechSynthesis.cancel();
-    paint(b);
-  }, 'small');
-  function paint(b) {
-    b.textContent = soundOn ? '🔊' : '🔇';
-    b.setAttribute('aria-pressed', String(soundOn));
-  }
-  paint(sound);
-  if (withReplay) button(parent, 'Kuula juhist uuesti', '👂 Kuula', () => {
-    if (!soundOn) { status('Heli saad sisse lülitada kõlarinupust.'); return }
-    if (!speak(voicePrompt)) {
-      tone(520);
-      status('Eesti kõnehääl pole seadmes saadaval. Jälgi pildilist vihjet.');
-    }
-  }, 'small');
+function controls(parent,replay){
+  const b=btn(parent,'Lülita heli sisse või välja','',()=>{
+    sound=!sound;paint();
+    if(sound){unlock();tone();speak(voiceText)}
+    else if('speechSynthesis' in window)speechSynthesis.cancel();
+  },'small');
+  function paint(){b.textContent=sound?'🔊':'🔇';b.setAttribute('aria-pressed',String(sound))}
+  paint();
+  if(replay)btn(parent,'Kuula juhist uuesti','👂 Kuula',()=>{
+    if(!sound){status('Heli saad sisse lülitada kõlarinupust.');return}
+    if(!speak(voiceText)){tone();status('Jälgi pilte. Eesti kõnehääl pole seadmes saadaval.')}
+  },'small');
 }
-function home() {
-  cancelPending(); locked = false; voicePrompt = ''; homeVisit++;
-  app.innerHTML =
-    '<header><span>⭐ ' + earned + '</span><div class="tools" id="tools"></div></header>' +
-    '<div class="hero"><button class="mascot" id="seal" aria-label="Tervita hüljest">🦭</button>' +
-    '<h1>Rannasõbra mängusaar</h1></div><h2>Vali mäng</h2><div class="menu" id="menu"></div>';
-  controls(get('tools'), false);
-  get('seal').onclick = () => {
-    unlockAudio(); sparkle(); tone(480); tone(640, .15, .12);
-    speak(homeVisit % 2 ? 'Tere, rannasõber! Vali mäng.' : 'Tere tulemast mängusaarele!');
-  };
-  for (const [key, [icon, name]] of Object.entries(games)) {
-    button(get('menu'), name, '<span class="icon">' + icon + '</span>' + name, () => {
-      tone(480); start(key);
-    });
-  }
-}
-function start(key) {
-  cancelPending(); mode = key; round = 0;
-  // Väga pikkade sõnade täherida võib algajale olla raske.
-  const pool = key === 'word' ? data.filter(x => x.word.length <= 6) : data;
-  deck = drawDeck(key, pool, total);
-  showRound();
-}
-function showRound() {
-  cancelPending(); locked = false;
-  app.innerHTML =
-    '<header><div id="nav"></div><span class="progress">🐚 ' + (round + 1) + ' / ' + total +
-    '</span><div class="tools" id="tools"></div></header><h2>' + games[mode][1] +
-    '</h2><div class="sheet"><div class="stage" id="stage"></div>' +
-    '<p role="status" id="status"></p></div>';
-  button(get('nav'), 'Tagasi mänguvalikusse', '⌂ Avaleht', home, 'small');
-  controls(get('tools'), true);
-  games[mode][2](deck[round]);
-}
-function finish(b) {
-  if (locked) return;
-  locked = true;
-  if (b) b.classList.add('ok');
-  earned++;
-  try { localStorage.setItem('rannasober-stars', String(earned)) } catch {}
-  sparkle(); tone(523, .13); tone(659, .13, .12); tone(784, .18, .24);
-  status('⭐ Tubli! Üks täht juures.');
-  later(() => { round++; round < total ? showRound() : treasure() }, 1150);
-}
-function treasure() {
-  cancelPending();
-  app.innerHTML =
-    '<div class="hero"><h1>Sinu aardelaegas</h1></div><div class="sheet stage">' +
-    '<div id="chest"></div><p id="reward" role="status">Puuduta laegast!</p>' +
-    '<div class="row" id="again"></div></div>';
-  button(get('chest'), 'Ava aardelaegas', '🎁', b => {
-    b.disabled = true; b.textContent = '💎'; sparkle();
-    tone(523); tone(659, .14, .12); tone(880, .22, .24);
-    get('reward').textContent = 'Leidsid aarde! Sul on kokku ' + earned + ' tähte.';
-    tell('Leidsid aarde! Tubli!');
-  }, 'sample');
-  button(get('again'), 'Järgmised kaheksa vooru', '▶ Mängi edasi', () => start(mode));
-  button(get('again'), 'Vali teine mäng', '⌂ Vali mäng', home);
-}
-function rows(sampleHTML) {
-  get('stage').innerHTML = '<div id="sample" class="sample">' + sampleHTML +
-    '</div><div class="row" id="options"></div>';
-}
-function options(correct, candidates, render, label, instruction) {
-  const n = round < 2 ? 2 : round < 5 ? 3 : 4;
-  const wrong = shuffle(candidates.filter(x => x !== correct)).slice(0, n - 1);
-  for (const x of shuffle([correct, ...wrong])) {
-    button(get('options'), label(x), render(x), b => {
-      if (locked) return;
-      if (x === correct) finish(b);
-      else { bump(b); status('Proovi veel.'); speak(instruction) }
-    }, 'card');
-  }
-  tell(instruction);
-}
-function matching(item) {
-  rows(picture(item));
-  options(item, data, picture, x => x.word, 'Leia sama pilt. ' + item.word.toLowerCase() + '.');
-}
-function letters(item) {
-  const c = item.word[0];
-  rows(c);
-  options(c, alphabet, x => x, x => 'Täht ' + x, 'Leia sama täht. ' + c + '.');
-}
-function firstLetter(item) {
-  const c = item.word[0];
-  rows(picture(item));
-  // Sõnamudel aitab ka last, kes alles õpib häälikuid kuulama.
-  get('sample').insertAdjacentHTML('beforeend',
-    '<div style="font-size:24px;letter-spacing:2px"><strong style="color:#a54919">' +
-    c + '</strong>' + item.word.slice(1) + '</div>');
-  options(c, alphabet, x => x, x => 'Täht ' + x,
-    item.word.toLowerCase() + '. Millise tähega see sõna algab?');
-}
-function spelling(item) {
-  let cursor = 0;
-  const chars = [...item.word];
-  get('stage').innerHTML =
-    '<div class="sample">' + picture(item) + '</div><div class="slots" id="slots"></div>' +
-    '<div class="row" id="tiles"></div>';
-  for (const c of chars) {
-    const s = document.createElement('span');
-    s.className = 'slot'; s.textContent = c; get('slots').append(s);
-  }
-  const slots = get('slots').children;
-  slots[0].classList.add('next');
-  for (const c of shuffle(chars)) {
-    button(get('tiles'), 'Täht ' + c, c, b => {
-      if (locked) return;
-      if (c !== chars[cursor]) {
-        bump(b); status('Otsi tähte ' + chars[cursor] + '.'); return;
-      }
-      b.disabled = true; b.classList.add('used');
-      slots[cursor].className = 'slot filled'; tone(430 + cursor * 55);
-      cursor++;
-      if (cursor === chars.length) {
-        speak(item.word.toLowerCase()); finish(); return;
-      }
-      slots[cursor].classList.add('next');
-      voicePrompt = 'Leia täht ' + chars[cursor] + '.';
-      status(voicePrompt);
-    }, 'tile');
-  }
-  tell('Lao sõna ' + item.word.toLowerCase() + '. Leia täht ' + chars[0] + '.');
-}
+get('beachCrab').onclick=()=>{
+  unlock();const crab=get('beachCrab');
+  crab.classList.remove('dance');void crab.offsetWidth;crab.classList.add('dance');
+  tone(620);tone(760,.12);
+};
 
-// Tükid on ühe tervikpildi neli lõiget. Ka taust jätkub üle tükkide piiride.
-function puzzleArt(item, i) {
-  const box = ['0 0 50 50','50 0 50 50','0 50 50 50','50 50 50 50'][i];
-  const icon = item.word === 'PLOOM'
-    ? '<ellipse cx="50" cy="55" rx="23" ry="29" fill="#79589c"/><path d="M50 28q0-12 9-18" fill="none" stroke="#705234" stroke-width="3"/><path d="M52 22q-14-14-22-9 7 11 22 9" fill="#62895a"/>'
-    : '<text x="50" y="74" text-anchor="middle" font-size="68">' + item.icon + '</text>';
-  return '<svg aria-hidden="true" viewBox="' + box + '">' +
-    '<rect width="100" height="100" fill="#c9eff0"/>' +
-    '<circle cx="18" cy="18" r="10" fill="#ffd46a"/>' +
-    '<path d="M0 66Q30 49 55 68T100 63V100H0Z" fill="#86c8aa"/>' +
-    '<path d="M0 87Q42 67 100 90V100H0Z" fill="#f3cf92"/>' +
-    icon + '</svg>';
-}
-function puzzle(item) {
-  const labels = ['ülemine vasak','ülemine parem','alumine vasak','alumine parem'];
-  const order = round < 3 ? [0,1,2,3] : shuffle([0,1,2,3]);
-  let step = 0;
-  get('stage').innerHTML = '<div class="board" id="board"></div><div class="row" id="pieces"></div>';
-  for (let i = 0; i < 4; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell'; cell.innerHTML = puzzleArt(item, i);
-    get('board').append(cell);
+function home(){
+  cancel();locked=false;voiceText='';
+  app.innerHTML='<header><span>⭐ '+stars+'</span><div class="tools" id="tools"></div></header>'+
+    '<div class="hero">🏝️</div><h1>Rannasõbra aardesaar</h1>'+
+    '<div class="row"><label for="length">Voorude arv</label>'+
+    '<select id="length"><option>8</option><option>16</option><option>24</option></select></div>'+
+    '<div class="menu" id="menu"></div>';
+  controls(get('tools'),false);
+  get('length').value=rounds;
+  get('length').onchange=e=>{rounds=Number(e.target.value)};
+  for(const [key,[icon,name]] of Object.entries(games)){
+    btn(get('menu'),name,'<span class="icon">'+icon+'</span>'+name,()=>{tone();start(key)});
   }
-  const cells = get('board').children;
-  cells[order[0]].classList.add('active');
-  for (const i of shuffle([0,1,2,3])) {
-    button(get('pieces'), labels[i] + ' tükk', puzzleArt(item, i), b => {
-      if (locked) return;
-      if (i !== order[step]) { bump(b); status('Vaata punktiiriga ruutu.'); return }
-      b.disabled = true; b.classList.add('used');
-      cells[i].className = 'cell placed'; tone(440 + step * 70);
-      if (++step === 4) { speak(item.word.toLowerCase()); finish(); return }
-      cells[order[step]].classList.add('active');
-      status('Leia järgmine tükk.');
-    }, 'piece');
-  }
-  tell('Leia punktiiriga ruutu sobiv tükk.');
 }
-function differences(item) {
-  const pool = shuffle(data.filter(x => x !== item));
-  const left = [item, ...pool.slice(0,3)], right = [...left];
-  const changes = shuffle([0,1,2,3]).slice(0, round < 3 ? 1 : 2);
-  changes.forEach((pos, j) => { right[pos] = pool[3 + j] });
-  const found = new Set();
-  get('stage').innerHTML =
-    '<p id="task"></p><div class="pair"><div class="picture" id="left"></div>' +
-    '<div class="picture" id="right"></div></div>';
-  const instruction = changes.length === 1 ? 'Leia üks erinevus.' : 'Leia kaks erinevust.';
-  get('task').textContent = instruction;
-  for (const [side, list] of [['left',left],['right',right]]) {
-    list.forEach((x, i) => button(get(side), x.word, picture(x), b => {
-      if (locked || found.has(i)) return;
-      if (!changes.includes(i)) { bump(b); status('Need pildid on ühesugused.'); return }
-      found.add(i);
-      for (const id of ['left','right']) get(id).children[i].classList.add('found');
-      if (found.size === changes.length) finish();
-      else { tone(620); status('Üks erinevus veel!'); speak('Üks veel!') }
-    }, 'spot'));
+function start(key){
+  cancel();game=key;round=0;
+  deck=nextItems(key,words,rounds);
+  // Sõnamäng algab võimaluse korral lühikese sõnaga.
+  if(key==='spell'){
+    const i=deck.findIndex(x=>x.word.length<=4);
+    if(i>0)[deck[0],deck[i]]=[deck[i],deck[0]];
+  }
+  show();
+}
+function show(){
+  cancel();locked=false;
+  app.innerHTML='<header><div id="nav"></div><span>🐚 '+(round+1)+' / '+rounds+
+    '</span><div class="tools" id="tools"></div></header><h2>'+games[game][1]+
+    '</h2><section class="panel"><div class="stage" id="stage"></div>'+
+    '<p role="status" id="status"></p></section>';
+  btn(get('nav'),'Tagasi mänguvalikusse','⌂ Avaleht',home,'small');
+  controls(get('tools'),true);
+  games[game][2](deck[round]);
+}
+function win(b){
+  if(locked)return;
+  locked=true;if(b)b.classList.add('ok');
+  stars++;try{localStorage.setItem('rannasober-stars',String(stars))}catch{}
+  celebrate();tone(523);tone(659,.12);tone(784,.24);
+  status('⭐ Tubli! Üks täht juures.');
+  later(()=>{round++;round<rounds?show():treasure()},1100);
+}
+function treasure(){
+  cancel();
+  app.innerHTML='<section class="panel stage"><h1>Sinu aardelaegas</h1>'+
+    '<div id="gift"></div><p id="reward">Puuduta laegast!</p><div class="row" id="again"></div></section>';
+  btn(get('gift'),'Ava aardelaegas','🎁',b=>{
+    b.textContent=pick(['💎','👑','💍','🏆']);b.disabled=true;celebrate();tone(760);
+    get('reward').textContent='Leidsid aarde! Sul on kokku '+stars+' tähte.';
+    tell('Leidsid aarde!');
+  },'sample');
+  btn(get('again'),'Mängi edasi','▶ Mängi edasi',()=>start(game));
+  btn(get('again'),'Vali mäng','⌂ Vali mäng',home);
+}
+function rows(sample){
+  get('stage').innerHTML='<div class="sample" id="sample">'+sample+'</div><div class="row" id="options"></div>';
+}
+function choose(correct,pool,render,label,instruction){
+  const n=round<2?2:round<5?3:4;
+  const wrong=mix(pool.filter(x=>x!==correct)).slice(0,n-1);
+  for(const x of mix([correct,...wrong])){
+    btn(get('options'),label(x),render(x),b=>{
+      if(locked)return;
+      if(x===correct)win(b);else retry(b,'Vaata näidist ja proovi uuesti.');
+    },'card');
   }
   tell(instruction);
 }
-function counting() {
-  const n = 1 + Math.floor(Math.random() * (round < 3 ? 3 : 5));
-  let jumped = 0;
-  get('stage').innerHTML =
-    '<div class="sample" style="font-size:44px">🐸</div><p>Tee ' + n +
-    (n === 1 ? ' hüpe' : ' hüpet') + '</p><div class="count">' + '💧'.repeat(n) +
-    '</div><div class="pond" id="pond"></div>';
-  for (let i = 1; i <= n; i++) {
-    button(get('pond'), 'Vesiroosileht ' + i, String(i), b => {
-      if (locked) return;
-      if (i !== jumped + 1) { bump(b); status('Leia leht numbriga ' + (jumped + 1) + '.'); return }
-      const previous = get('pond').querySelector('.frog');
-      if (previous) previous.remove();
-      b.insertAdjacentHTML('beforeend','<span class="frog" aria-hidden="true">🐸</span>');
-      b.classList.add('ok');
-      jumped++; tone(340 + 80 * i); speak(String(i));
-      if (jumped === n) finish();
-      else status('Järgmine leht on ' + (jumped + 1) + '.');
-    }, 'pad');
+function matchGame(x){
+  rows(x.icon);choose(x,words,i=>i.icon,i=>i.word,'Leia sama pilt. '+x.word.toLowerCase()+'.');
+}
+function letterGame(x){
+  const c=pick([...x.word]);rows(c);
+  choose(c,alphabet,i=>i,i=>'Täht '+i,'Leia sama täht. '+c+'.');
+}
+function initialGame(x){
+  rows(x.icon+'<div style="font-size:25px"><strong style="color:#a34818">'+
+    x.word[0]+'</strong>'+x.word.slice(1)+'</div>');
+  choose(x.word[0],alphabet,i=>i,i=>'Täht '+i,x.word.toLowerCase()+'. Leia esimene täht.');
+}
+function spellGame(x){
+  let cursor=0;const letters=[...x.word];
+  get('stage').innerHTML='<div class="sample">'+x.icon+'</div>'+
+    '<div class="slots" id="slots"></div><div class="row" id="tiles"></div>';
+  for(const c of letters){
+    const s=document.createElement('span');s.className='slot';s.textContent=c;get('slots').append(s);
+  }
+  const slots=get('slots').children;slots[0].classList.add('next');
+  for(const c of mix(letters)){
+    btn(get('tiles'),'Täht '+c,c,b=>{
+      if(locked)return;
+      if(c!==letters[cursor]){retry(b,'Otsi tähte '+letters[cursor]+'.');return}
+      b.disabled=true;b.classList.add('used');slots[cursor].className='slot filled';tone(440+cursor*40);
+      if(++cursor===letters.length){speak(x.word.toLowerCase());win();return}
+      slots[cursor].classList.add('next');voiceText='Leia täht '+letters[cursor]+'.';status(voiceText);
+    },'tile');
+  }
+  tell('Lao sõna '+x.word.toLowerCase()+'. Leia täht '+letters[0]+'.');
+}
+function crop(x,i){
+  const boxes=['0 0 50 50','50 0 50 50','0 50 50 50','50 50 50 50'];
+  return '<svg aria-hidden="true" viewBox="'+boxes[i]+'"><rect width="100" height="100" fill="#c6eae9"/>'+
+    '<circle cx="18" cy="16" r="10" fill="#ffcf67"/><path d="M0 66Q32 48 56 66T100 62V100H0Z" fill="#91cdaa"/>'+
+    '<path d="M0 88Q40 67 100 88V100H0Z" fill="#f3d09a"/>'+
+    '<text x="50" y="73" text-anchor="middle" font-size="68">'+x.icon+'</text></svg>';
+}
+function puzzleGame(x){
+  let step=0;
+  const order=round<2?[0,1,2,3]:mix([0,1,2,3]);
+  const labels=['ülemine vasak','ülemine parem','alumine vasak','alumine parem'];
+  get('stage').innerHTML='<div id="board" class="board"></div><div class="row" id="pieces"></div>';
+  for(let i=0;i<4;i++)get('board').insertAdjacentHTML('beforeend','<div class="cell">'+crop(x,i)+'</div>');
+  const cells=get('board').children;cells[order[0]].classList.add('active');
+  for(const i of mix([0,1,2,3])){
+    btn(get('pieces'),labels[i]+' tükk',crop(x,i),b=>{
+      if(locked)return;
+      if(i!==order[step]){retry(b,'Vaata punktiiriga ruutu.');return}
+      cells[i].className='cell placed';b.classList.add('used');b.disabled=true;tone(460+step*55);
+      if(++step===4){win();return}
+      cells[order[step]].classList.add('active');
+    },'piece');
+  }
+  tell('Leia märgitud kohta sobiv tükk.');
+}
+function diffGame(x){
+  const pool=mix(words.filter(a=>a!==x));
+  const left=mix([x,...pool.slice(0,3)]),right=[...left];
+  const changed=mix([0,1,2,3]).slice(0,round<3?1:2),found=new Set();
+  changed.forEach((v,i)=>right[v]=pool[i+3]);
+  const task=changed.length===1?'Leia üks erinevus.':'Leia kaks erinevust.';
+  get('stage').innerHTML='<p>'+task+'</p><div class="pair"><div class="picture" id="left"></div>'+
+    '<div class="picture" id="right"></div></div>';
+  for(const [side,list] of [['left',left],['right',right]]){
+    list.forEach((v,i)=>btn(get(side),v.word,v.icon,b=>{
+      if(locked||found.has(i))return;
+      if(!changed.includes(i)){retry(b,'Need pildid on ühesugused.');return}
+      found.add(i);for(const s of ['left','right'])get(s).children[i].classList.add('found');
+      if(found.size===changed.length)win();else{tone(620);status('Üks erinevus veel!')}
+    },'spot'));
+  }
+  tell(task);
+}
+function frogGame(){
+  const n=1+Math.floor(Math.random()*(round<2?3:6));let jumped=0;
+  get('stage').innerHTML='<div class="sample">🐸</div><p>Tee '+n+(n===1?' hüpe.':' hüpet.')+
+    '</p><div>'+('💧'.repeat(n))+'</div><div class="pond" id="pond"></div>';
+  for(let i=1;i<=n;i++){
+    btn(get('pond'),'Vesiroosileht '+i,String(i),b=>{
+      if(locked)return;
+      if(i!==jumped+1){retry(b,'Leia leht numbriga '+(jumped+1)+'.');return}
+      get('pond').querySelector('.frog')?.remove();
+      b.insertAdjacentHTML('beforeend','<span class="frog">🐸</span>');tone(350+i*65);speak(String(i));
+      if(++jumped===n)win(b);
+    },'pad');
   }
   tell('Aita konnal hüpata. Alusta esimesest lehest.');
 }
-function memory(item) {
-  const list = shuffle([item, ...shuffle(data.filter(x => x !== item)).slice(0, 2)]);
-  const length = round < 3 ? 2 : round < 7 ? 3 : 4;
-  const sequence = [];
-  for (let i = 0; i < length; i++) {
-    const possible = [0,1,2].filter(j => j !== sequence[i - 1]);
-    sequence.push(shuffle(possible)[0]);
-  }
-  let cursor = 0;
-  get('stage').innerHTML =
-    '<p id="memoryHint"></p><div class="row" id="cards"></div><div id="repeat"></div>';
-  const cards = list.map((x, i) => button(get('cards'), x.word, picture(x), b => {
-    if (locked || memoryPlaying) return;
-    if (sequence[cursor] !== i) {
-      bump(b); replay(); return;
-    }
-    tone([440,554,659][i]); b.classList.add('ok');
-    later(() => b.classList.remove('ok'), 220);
-    cursor++;
-    if (cursor === length) finish(b);
-    else status('Õige! Veel ' + (length - cursor) + '.');
-  }, 'card'));
-  function replay() {
-    if (locked || memoryPlaying) return;
-    cursor = 0; memoryPlaying = true; status('');
-    get('memoryHint').textContent = '👀 Vaata järjekorda';
-    cards.forEach(b => { b.disabled = true; b.classList.remove('ok') });
-    sequence.forEach((idx, j) => {
-      const start = 550 + j * 900;
-      later(() => { cards[idx].classList.add('lit'); tone([440,554,659][idx], .32) }, start);
-      later(() => cards[idx].classList.remove('lit'), start + 620);
+function memoryGame(x){
+  const list=mix([x,...mix(words.filter(a=>a!==x)).slice(0,2)]);
+  const length=round<3?2:round<8?3:4;
+  const seq=[];for(let i=0;i<length;i++)seq.push(pick([0,1,2].filter(j=>j!==seq[i-1])));
+  let step=0,playing=false;
+  get('stage').innerHTML='<p id="memHint"></p><div class="row" id="cards"></div><div id="repeat"></div>';
+  const cards=list.map((v,i)=>btn(get('cards'),v.word,v.icon,b=>{
+    if(locked||playing)return;
+    if(i!==seq[step]){retry(b);replay();return}
+    tone([440,554,659][i]);b.classList.add('ok');later(()=>b.classList.remove('ok'),220);
+    if(++step===length)win(b);else status('Õige! Veel '+(length-step)+'.');
+  },'card'));
+  function replay(){
+    if(locked||playing)return;
+    step=0;playing=true;status('');get('memHint').textContent='👀 Vaata järjekorda';
+    cards.forEach(b=>b.disabled=true);
+    seq.forEach((v,i)=>{
+      later(()=>{cards[v].classList.add('lit');tone([440,554,659][v])},450+i*850);
+      later(()=>cards[v].classList.remove('lit'),1030+i*850);
     });
-    later(() => {
-      memoryPlaying = false; cards.forEach(b => { b.disabled = false });
-      get('memoryHint').textContent = '☝️ Nüüd puuduta samas järjekorras';
-      voicePrompt = 'Nüüd on sinu kord.'; speak(voicePrompt);
-    }, 550 + length * 900);
+    later(()=>{
+      playing=false;cards.forEach(b=>b.disabled=false);
+      get('memHint').textContent='☝️ Puuduta samas järjekorras';tell('Nüüd on sinu kord.');
+    },450+seq.length*850);
   }
-  button(get('repeat'), 'Näita järjekorda uuesti', '↻ Näita uuesti', replay, 'small');
-  tell('Vaata, millised pildid süttivad.');
-  replay();
+  btn(get('repeat'),'Näita uuesti','↻ Näita uuesti',replay,'small');
+  tell('Vaata, millised pildid süttivad.');replay();
+}
+
+// SVG-kaart. Pointer Events toetab hiirt, sõrme ja tahvlipliiatsit.
+function mapGame(){
+  const flip=Math.random()<.5;
+  const spots=[[68,165],[182,81],[305,149],[438,65],[540,142]]
+    .map(([x,y])=>({x:flip?600-x:x,y:y+Math.floor(Math.random()*31)-15}));
+  const stops=round<3?[spots[0],spots[2],spots[4]]:spots;
+  const ns='http://www.w3.org/2000/svg';
+  let index=0,active=null,line=null,color='#9a442c',free=false;
+  get('stage').innerHTML=
+    '<p id="mapHint"></p><svg class="map" id="mapPaper" viewBox="0 0 600 240" aria-label="Joonistatav aardekaart">'+
+    '<rect width="600" height="240" fill="#99dce0"/>'+
+    '<path d="M8 135Q33 40 158 51T369 41Q489 2 577 71Q628 151 532 186T306 203Q183 228 79 209Q12 205 8 135Z" fill="#69a99b"/>'+
+    '<path d="M8 125Q33 30 158 41T369 31Q489 -8 577 61Q628 141 532 176T306 193Q183 218 79 199Q12 195 8 125Z" fill="#f2dfa4"/>'+
+    '<text x="26" y="40" font-size="26">🧭</text><text x="275" y="72" font-size="35">🌴</text>'+
+    '<text x="374" y="195" font-size="26">🪨</text><text x="110" y="222" font-size="25">🐟</text>'+
+    '<g id="guide"></g><g id="ink"></g><g id="marks" pointer-events="none"></g></svg>'+
+    '<div class="row" id="paintTools"></div>';
+  const paper=get('mapPaper');
+  function svg(tag,attrs){
+    const n=document.createElementNS(ns,tag);
+    for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);
+    return n;
+  }
+  function mark(){
+    get('marks').replaceChildren();get('guide').replaceChildren();
+    if(free){get('mapHint').textContent='🎨 Joonista oma saar või meretee.';return}
+    get('mapHint').textContent=index===0?'Alusta lipust ja tõmba joon mööda täppe.':'Jätka helendava märgini.';
+    const guide=svg('polyline',{points:stops.map(p=>p.x+','+p.y).join(' '),
+      fill:'none',stroke:'#9a8358','stroke-width':3,'stroke-dasharray':'4 9'});
+    get('guide').append(guide);
+    stops.forEach((p,i)=>{
+      get('marks').append(svg('circle',{cx:p.x,cy:p.y,r:i===index?20:14,
+        fill:i<index?'#b8e3ab':'#fff9de',stroke:i===index?'#b85d19':'#65897b','stroke-width':i===index?5:2}));
+      const t=svg('text',{x:p.x,y:p.y+7,'text-anchor':'middle','font-size':19});
+      t.textContent=i===0?'⚑':i===stops.length-1?'💎':i<index?'✓':'•';get('marks').append(t);
+    });
+  }
+  function coords(e){
+    const p=paper.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
+    return p.matrixTransform(paper.getScreenCTM().inverse());
+  }
+  function distance(p,q){return Math.hypot(p.x-q.x,p.y-q.y)}
+  function reset(){
+    if(active!==null&&paper.hasPointerCapture(active))paper.releasePointerCapture(active);
+    active=null;line=null;index=0;get('ink').replaceChildren();mark();status('');
+  }
+  function stroke(p){
+    line=svg('polyline',{points:p.x+','+p.y,fill:'none',stroke:color,
+      'stroke-width':free?5:6,'stroke-linecap':'round','stroke-linejoin':'round'});
+    get('ink').append(line);
+  }
+  paper.onpointerdown=e=>{
+    if(locked||active!==null||e.button!==0)return;
+    const p=coords(e);
+    if(!free&&distance(p,stops[Math.max(0,index-1)])>32){
+      status(index?'Jätka viimasest läbitud märgist.':'Pane sõrm lipule.');return;
+    }
+    unlock();e.preventDefault();active=e.pointerId;paper.setPointerCapture(active);
+    stroke(p);
+    if(!free&&index===0){index=1;mark();tone(410)}
+  };
+  paper.onpointermove=e=>{
+    if(e.pointerId!==active||locked||!line)return;
+    const p=coords(e);
+    line.setAttribute('points',line.getAttribute('points')+' '+p.x.toFixed(1)+','+p.y.toFixed(1));
+    if(!free&&index<stops.length&&distance(p,stops[index])<26){
+      index++;tone(400+index*65);mark();
+      if(index===stops.length)win();
+    }
+  };
+  function end(e){
+    if(e.pointerId!==active)return;
+    active=null;line=null;
+  }
+  paper.onpointerup=end;paper.onpointercancel=end;paper.onlostpointercapture=end;
+  for(const [name,icon,value] of [['Pruun','🟤','#9a442c'],['Sinine','🔵','#225baf'],['Roheline','🟢','#27794b']]){
+    const b=btn(get('paintTools'),name,icon,()=>{
+      color=value;get('paintTools').querySelectorAll('.swatch').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));
+    },'swatch');
+    b.setAttribute('aria-pressed',String(value===color));
+  }
+  btn(get('paintTools'),'Kustuta jooned','↻ Puhasta',()=>{if(!locked)reset()},'small');
+  btn(get('paintTools'),'Vaheta joonistamisviisi','🎨 Vaba joonistus',b=>{
+    if(locked)return;
+    free=!free;b.textContent=free?'🗺️ Aardetee':'🎨 Vaba joonistus';reset();
+    tell(free?'Joonista sõrmega oma pilt.':'Alusta lipust ja leia aare.');
+  },'small');
+  mark();tell('Alusta lipust. Tõmba sõrmega joon mööda täppe aardeni.');
+}
+
+// Valikutega animafilm. Iga haru määrab järgmise stseeni ja tegevused.
+const destinations=[
+  {name:'Tuletorn',icon:'🗼',line:'Kaldal süttib tuletorni tuli.',
+    choices:[['🔦','Näita valgust','Hüljes näitab laternaga teed. Kalapaat leiab sadama!','⛵'],
+             ['🔔','Helista kella','Kell heliseb. Majakavaht lehvitab hülgele!','👋']]},
+  {name:'Palmisaar',icon:'🏝️',line:'Saare liival paistab midagi ümmargust.',
+    choices:[['🐢','Aita kilpkonna','Hüljes saadab väikese kilpkonna lainetesse.','🐢'],
+             ['🥥','Veereta kookost','Kookos veereb vette. Krabi saab endale pisikese parve!','🦀']]},
+  {name:'Koopasuu',icon:'⛰️',line:'Koopast kostab vaikne kõlin.',
+    choices:[['🎵','Laula vastu','Koobas vastab kajaga ja nahkhiir ärkab.','🦇'],
+             ['💎','Otsi läiget','Hüljes leiab veest sinise kristalli!','💎']]},
+  {name:'Linnulaid',icon:'🪺',line:'Pesast kostab piiksumist.',
+    choices:[['🪶','Vii sulg','Pehme sulg teeb linnupesa soojaks.','🐣'],
+             ['🐟','Too kala','Emalind viib kala oma pojale.','🐦']]},
+  {name:'Jäälaht',icon:'🧊',line:'Valge jääpanga kõrval sulpsatab vesi.',
+    choices:[['🐋','Tervita vaala','Vaal vastab kõrge veesambaga!','🐋'],
+             ['❄️','Püüa lumehelves','Helves maandub hülge ninal. Hüljes aevastab!','❄️']]}
+];
+function movieGame(){
+  let phase=0;
+  const routes=nextItems('filmipaigad',destinations,2);
+  const sky=pick(['☀️','🌤️','🌙']);
+  get('stage').innerHTML='<div class="movie" id="screen"><span class="sky">'+sky+'</span>'+
+    '<span class="land" id="land"></span><span class="actor" id="actor">🦭</span></div>'+
+    '<p id="caption" aria-live="polite"></p><div class="row" id="filmChoices"></div>';
+  function scene(icon,text,next){
+    const screen=get('screen');
+    get('filmChoices').replaceChildren();
+    get('land').textContent=icon;get('caption').textContent=text;tell(text);
+    screen.classList.remove('play');void screen.offsetWidth;screen.classList.add('play');
+    let ready=false;
+    function arrive(){
+      if(ready||locked)return;
+      ready=true;get('filmChoices').replaceChildren();next();
+    }
+    btn(get('filmChoices'),'Liigu valikuni','⏩ Edasi',arrive,'small');
+    later(arrive,3000);
+  }
+  function choice(icon,name,fn){
+    btn(get('filmChoices'),name,'<span>'+icon+'</span>'+name,fn,'storybtn');
+  }
+  function branch(dest){
+    if(phase!==1)return;phase=2;tone(550);
+    scene(dest.icon,dest.line,()=>{
+      phase=3;
+      for(const [icon,name,ending,endIcon] of mix(dest.choices)){
+        choice(icon,name,()=>{
+          if(phase!==3)return;phase=4;tone(620);
+          scene(endIcon,ending,()=>{
+            phase=5;
+            choice('⭐','Lõpeta lugu',b=>{if(phase===5){phase=6;win(b)}});
+          });
+        });
+      }
+    });
+  }
+  scene('🌊','Hüljes asub mereretkele. Kuhu ta täna ujub?',()=>{
+    phase=1;
+    for(const dest of routes)choice(dest.icon,dest.name,()=>branch(dest));
+  });
 }
 home();
 </script>
