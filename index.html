@@ -1,32 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="et">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leia rannasõber</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leia rannasõber · Saaremaa rannamängud</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;color:#183f4b;font:600 1rem/1.3 system-ui,sans-serif;background:#f8eaca}
+body{margin:0;color:#204e54;background:#f5e5c4;font:600 1rem/1.35 system-ui,sans-serif}
 .scene{position:fixed;inset:0;width:100%;height:100%;z-index:-1}
-main{width:min(100%,850px);margin:auto;height:100vh;height:100dvh;padding:clamp(10px,2.4vh,24px) 16px}
-section{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:clamp(7px,2vh,20px)}
-[hidden]{display:none}
-h1,h2,p{margin:0;text-align:center}
-h1,h2{font-family:Georgia,serif;font-size:clamp(32px,7vmin,68px);line-height:1.04}
-h2{font-size:clamp(24px,4.5vmin,42px)}
-button{cursor:pointer;touch-action:manipulation;color:inherit;font:inherit}
-button:focus-visible{outline:5px solid #954011;outline-offset:3px}
-.action{background:#145966;border:2px solid #103e48;border-radius:40px;padding:14px 30px;color:white;font-size:1.4rem}
-.hero{height:clamp(80px,29vh,235px);width:80%}
-#target{height:min(32vh,245px);width:min(78vw,350px);background:#fffaf0;border:3px solid #986d46;border-radius:48% 48% 30% 30%;padding:8px}
-.art{display:block;width:100%;height:100%}
-.choices{display:flex;width:100%;justify-content:center;gap:clamp(8px,2vw,22px)}
-.card{background:#fffdf6;border:3px solid #406a70;border-radius:24px;width:min(30%,200px);height:min(26vh,175px);padding:5px;box-shadow:0 4px 0 #b8a880}
-.card.correct{border:6px solid #367650;background:#e8f4dc}
-#target.hint{outline:5px solid #c68137}
-.shells{display:flex;align-items:center;justify-content:center;gap:4px;max-width:100%}
-.shells svg{width:clamp(26px,5vmin,48px);height:clamp(26px,5vmin,48px)}
-.empty{opacity:.23;filter:grayscale(1)}
-</style>
+main{width:min(96%,820px);margin:auto;text-align:center;padding:clamp(10px,2vh,24px) 0}
+h1,h2{font-family:Georgia,serif;line-height:1.1;margin:.3em 0}
+h1{font-size:clamp(32px,6vmin,58px)}h2{font-size:clamp(22px,4vmin,36px)}
+p{margin:.5em 0}button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+button,.panel{background:#fffcf3;border:2px solid #47716d;border-radius:20px}
+button{min-height:48px;padding:.55em .85em;box-shadow:0 3px 0 #b6b396}
+button:focus-visible{outline:4px solid #a04318;outline-offset:2px}
+button:disabled{cursor:default}
+.art{width:100%;height:100%;display:block}
+.mascot{height:min(18vh,130px);margin:auto}
+.menu,.row,.pair,.slots,header{display:flex;justify-content:center;align-items:center;gap:clamp(6px,1.4vw,16px)}
+.menu{flex-wrap:wrap;margin:1.2em auto}.menu button{width:clamp(125px,25vw,220px);min-height:90px}
+.icon{display:block;font-size:clamp(30px,5vmin,46px);line-height:1.2}
+header{justify-content:space-between}header span{font-variant-numeric:tabular-nums}
+.stage{display:grid;justify-items:center;gap:clamp(8px,2vh,20px)}
+.model{width:min(40vw,220px);height:min(23vh,165px);padding:8px}
+.row{width:100%;flex-wrap:wrap}.choice{width:min(27%,158px);height:min(20vh,124px);padding:5px}
+.tile,.slot{font-size:clamp(23px,5vmin,46px);font-weight:750}
+.slot{display:grid;place-items:center;width:clamp(38px,9vw,66px);height:clamp(44px,10vmin,70px);border-bottom:4px solid #567979;color:#747776}
+.slot.filled,.ok{color:#215b44;background:#def1d9}.slot.next{border-color:#b96227;background:#fff3d4}
+.used{visibility:hidden}.focus-piece,.focus-cell{outline:4px dashed #b3632a;outline-offset:-5px}
+.puzzle,.picture{display:grid;grid-template-columns:repeat(2,1fr);overflow:hidden;background:#fff8df;border:2px solid #47716d;border-radius:14px}
+.puzzle{width:min(48vw,32vh,255px);aspect-ratio:4/3}.puzzle>div{min-height:0;border:1px dotted #9eaa99}.ghost{opacity:.23}
+.piece{width:min(20vw,14vh,108px);aspect-ratio:4/3;padding:0;overflow:hidden}
+.pair{width:100%}.picture{width:min(44vw,32vh,260px)}.spot{width:100%;aspect-ratio:4/3;min-height:0;padding:2px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.spot.found{background:#c9ebcf;outline:3px solid #40845c;outline-offset:-3px}
+#status{min-height:1.4em;font-size:1.1rem}.shells{display:flex;justify-content:center}.shells svg{width:clamp(32px,8vw,64px);height:50px}
+@media(max-height:500px){.mascot{height:60px}.menu{margin:.5em auto}.menu button{min-height:60px}.stage{gap:5px}}
+</style></head><body>
 <svg class="scene" aria-hidden="true" viewBox="0 0 1000 800" preserveAspectRatio="none">
 <rect width="1000" height="800" fill="#ecf6f1"/><circle cx="850" cy="125" r="52" fill="#f3d9a1"/>
 <path d="M0 460Q210 435 390 461T780 455T1050 455V800H0Z" fill="#a8d7cf"/>
@@ -40,84 +48,144 @@ button:focus-visible{outline:5px solid #954011;outline-offset:3px}
 <symbol id="boat" viewBox="0 0 120 90"><g stroke="#334f5c" stroke-width="2.5" stroke-linejoin="round"><path d="M61 9v54" fill="none"/><path d="M54 14 17 53h37Z" fill="#f3ae65"/><path d="m67 16 31 37H67Z" fill="#fff8d8"/><path d="M9 61h103L94 77H28Z" fill="#447b91"/></g></symbol>
 <symbol id="shell" viewBox="0 0 120 90"><path d="M51 75 15 49Q5 36 22 32Q18 19 34 19Q37 7 50 14Q60 2 70 14Q83 7 87 20Q103 19 99 33Q117 36 106 50L69 75l2 5H49Z" fill="#e6a184" stroke="#875648" stroke-width="3"/><path d="m58 70-32-37m33 36L40 22m21 46V18m3 51 18-46m-16 47 29-36" fill="none" stroke="#b17461" stroke-width="2.5"/></symbol>
 </defs></svg>
-<main>
-<section id="home"><h1>Leia rannasõber</h1><svg class="hero" aria-hidden="true"><use href="#seal"/></svg><button class="action" id="start">▶ Mängi</button></section>
-<section id="game" hidden><h2>Leia sama pilt</h2><div id="target"></div><div class="choices" id="choices"></div><div class="shells" id="progress"></div></section>
-<section id="end" hidden><h2>Kõik kuus merekarpi!</h2><svg class="hero" aria-hidden="true"><use href="#seal"/></svg><div class="shells" id="collection"></div><button class="action" id="again">↻ Mängi uuesti</button></section>
-</main>
+<main id="app"></main>
 <script>
-const names = {seal:'Hüljes', gull:'Kajakas', fish:'Kala', crab:'Krabi', boat:'Purjekas', shell:'Merekarp'};
-const ids = Object.keys(names);
-const el = id => document.getElementById(id);
-let order, round, previousSlot, locked, hintTimer;
-function shuffled(items) {
-  const result = [...items];
-  for (let i=result.length-1;i>0;i--) {
+'use strict';
+const app=document.getElementById('app');
+const animals={seal:'Hüljes',gull:'Kajakas',fish:'Kala',crab:'Krabi',boat:'Purjekas',shell:'Merekarp'};
+const ids=Object.keys(animals);
+const words=[['fish','KALA'],['seal','HÜLJES'],['boat','PAAT'],['crab','KRABI'],['gull','KAJAKAS'],['shell','KARP']];
+const games={
+  match:['🦭','Leia sama pilt',match],
+  letter:['A','Leia sama täht',letter],
+  word:['🔤','Lao sõna',word],
+  puzzle:['🧩','Pane pusle kokku',puzzle],
+  diff:['🔎','Leia erinevused',differences]
+};
+const get=id=>document.getElementById(id);
+let mode,round,deck,timer,locked,lastSlot;
+function mix(list){
+  const copy=[...list];
+  for(let i=copy.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
-    [result[i],result[j]]=[result[j],result[i]];
+    [copy[i],copy[j]]=[copy[j],copy[i]];
   }
-  return result;
+  return copy;
 }
-function art(id) {
-  return '<svg class="art" aria-hidden="true" viewBox="0 0 120 90"><use href="#'+id+'"/></svg>';
+function art(id,box='0 0 120 90'){
+  return '<svg class="art" aria-hidden="true" viewBox="'+box+'"><use href="#'+id+'" width="120" height="90"/></svg>';
 }
-function shells(container, count) {
-  container.innerHTML = '';
-  container.setAttribute('role','img');
-  container.setAttribute('aria-label','Kogutud '+count+' merekarpi kuuest');
-  for(let i=0;i<6;i++) {
-    container.insertAdjacentHTML('beforeend',art('shell'));
-    if(i>=count) container.lastElementChild.classList.add('empty');
+function button(parent,label,html,action,style=''){
+  const b=document.createElement('button');
+  b.type='button'; b.className=style; b.setAttribute('aria-label',label);
+  b.innerHTML=html; b.onclick=()=>{if(!locked) action(b)};
+  parent.append(b);return b;
+}
+function home(){
+  clearTimeout(timer);locked=false;
+  app.innerHTML='<h1>Leia rannasõber</h1><div class="mascot">'+art('seal')+'</div><h2>Vali mäng</h2><div class="menu" id="menu"></div>';
+  for(const [key,[icon,title]] of Object.entries(games)){
+    button(get('menu'),title,'<span class="icon">'+icon+'</span>'+title,()=>start(key));
   }
 }
-function screen(id) {
-  for(const name of ['home','game','end']) el(name).hidden=name!==id;
+function start(key){
+  mode=key;round=0;lastSlot=-1;
+  deck=mode==='word'?mix(words.slice(1)).slice(0,3):mix(ids);
+  if(mode==='word')deck.unshift(words[0]);
+  show();
 }
-function play() {
-  order=shuffled(ids); round=0; previousSlot=-1;
-  screen('game'); draw();
-}
-function draw() {
+function show(){
   locked=false;
-  clearTimeout(hintTimer);
-  const target=order[round];
+  app.innerHTML='<header><button id="back" aria-label="Tagasi mänguvalikusse">⌂ Avaleht</button><span>🐚 '+round+' / '+deck.length+'</span></header><h2>'+games[mode][1]+'</h2><div class="stage" id="stage"></div><p id="status" role="status"></p>';
+  get('back').onclick=home;
+  games[mode][2](deck[round]);
+}
+function message(text){get('status').textContent=text}
+function win(){
+  if(locked)return;
+  locked=true;message('✓ Leidsid! Üks merekarp juures.');
+  timer=setTimeout(()=>{
+    round++;
+    if(round<deck.length){show();return}
+    locked=false;
+    app.innerHTML='<h1>Kõik merekarbid leitud!</h1><div class="mascot">'+art('seal')+'</div><div class="shells">'+art('shell').repeat(round)+'</div><div class="row" id="actions"></div>';
+    button(get('actions'),'Mängi uuesti','↻ Mängi uuesti',()=>start(mode));
+    button(get('actions'),'Vali mäng','⌂ Vali mäng',home);
+  },950);
+}
+function choose(target,pool,render,label){
   const count=round<3?2:3;
-  const slots=Array.from({length:count},(_,i)=>i);
-  const slot=shuffled(slots.filter(i=>i!==previousSlot))[0];
-  previousSlot=slot;
-  const options=shuffled(ids.filter(id=>id!==target)).slice(0,count-1);
-  options.splice(slot,0,target);
-  el('target').classList.remove('hint');
-  el('target').setAttribute('role','img');
-  el('target').setAttribute('aria-label','Leia sama pilt. '+names[target]);
-  el('target').innerHTML=art(target);
-  shells(el('progress'),round);
-  el('choices').replaceChildren();
-  for(const id of options) {
-    const button=document.createElement('button');
-    button.className='card';
-    button.setAttribute('aria-label',names[id]);
-    button.innerHTML=art(id);
-    button.onclick=()=>{
-      if(locked) return;
-      if(id!==target) {
-        clearTimeout(hintTimer);
-        el('target').classList.add('hint');
-        hintTimer=setTimeout(()=>el('target').classList.remove('hint'),700);
-        return;
-      }
-      locked=true;
-      button.classList.add('correct');
-      shells(el('progress'),++round);
-      setTimeout(()=>{
-        if(round<ids.length) draw();
-        else {shells(el('collection'),round); screen('end'); el('again').focus();}
-      },950);
-    };
-    el('choices').append(button);
+  const options=mix(pool.filter(x=>x!==target)).slice(0,count-1);
+  const positions=Array.from({length:count},(_,i)=>i);
+  lastSlot=mix(positions.filter(i=>i!==lastSlot))[0];
+  options.splice(lastSlot,0,target);
+  get('stage').innerHTML='<div class="panel model" id="sample"></div><div class="row" id="choices"></div>';
+  get('sample').innerHTML=render(target);
+  get('sample').setAttribute('aria-label',label(target));
+  get('sample').setAttribute('role','img');
+  for(const item of options){
+    button(get('choices'),label(item),render(item),b=>{
+      if(item===target){b.classList.add('ok');win()}
+      else{get('sample').classList.add('focus-cell');message('Vaata ülemist näidist.')}
+    },'choice tile');
   }
 }
-el('start').onclick=play;
-el('again').onclick=play;
-</script>
-</html>
+function match(id){choose(id,ids,art,id=>animals[id])}
+const alphabet={seal:'Ü',gull:'J',fish:'K',crab:'R',boat:'P',shell:'A'};
+function letter(id){
+  const glyph=c=>'<span style="display:grid;place-items:center;height:100%;font-size:clamp(34px,9vmin,72px)">'+c+'</span>';
+  choose(alphabet[id],Object.values(alphabet),glyph,c=>'Täht '+c);
+}
+function word([id,text]){
+  let cursor=0;
+  const letters=[...text];
+  get('stage').innerHTML='<div class="model">'+art(id)+'</div><div class="slots" id="slots"></div><div class="row" id="letters"></div>';
+  for(const c of letters)get('slots').insertAdjacentHTML('beforeend','<span class="slot">'+c+'</span>');
+  const slots=get('slots').children;slots[0].classList.add('next');
+  for(const c of mix(letters)){
+    button(get('letters'),'Täht '+c,c,b=>{
+      if(c!==letters[cursor]){message('Otsi tähte '+letters[cursor]+'.');return}
+      b.disabled=true;b.classList.add('used');slots[cursor].className='slot filled';cursor++;
+      if(cursor===letters.length){win();return}
+      slots[cursor].classList.add('next');message('Leia '+letters[cursor]+'.');
+    },'tile');
+  }
+}
+function puzzle(id){
+  const crops=['0 0 60 45','60 0 60 45','0 45 60 45','60 45 60 45'];
+  const labels=['ülemine vasak','ülemine parem','alumine vasak','alumine parem'];
+  let cursor=0;
+  get('stage').innerHTML='<p>Leia märgitud kohta sobiv tükk.</p><div class="puzzle" id="board"></div><div class="row" id="pieces"></div>';
+  for(const box of crops)get('board').insertAdjacentHTML('beforeend','<div class="ghost">'+art(id,box)+'</div>');
+  const cells=get('board').children;cells[0].classList.add('focus-piece');
+  for(const i of mix([0,1,2,3])){
+    button(get('pieces'),animals[id]+', '+labels[i]+' tükk',art(id,crops[i]),b=>{
+      if(i!==cursor){message('Vaata punktiiriga ruutu.');return}
+      b.disabled=true;b.classList.add('used');cells[cursor].className='';cursor++;
+      if(cursor===4){win();return}
+      cells[cursor].classList.add('focus-piece');message('Leia järgmine tükk.');
+    },'piece');
+  }
+}
+function differences(id){
+  const left=[id,...mix(ids.filter(x=>x!==id)).slice(0,3)];
+  const right=[...left];
+  const changed=mix([0,1,2,3]).slice(0,round<2?1:2);
+  const replacements=mix(ids.filter(x=>!left.includes(x)));
+  changed.forEach((position,i)=>right[position]=replacements[i]);
+  const found=new Set();
+  get('stage').innerHTML='<p id="prompt"></p><div class="pair"><div class="picture" id="left"></div><div class="picture" id="right"></div></div>';
+  get('prompt').textContent=changed.length===1?'Leia üks erinevus.':'Leia kaks erinevust.';
+  for(const [side,data] of [['left',left],['right',right]]){
+    data.forEach((item,i)=>button(get(side),animals[item],art(item),()=>{
+      if(found.has(i))return;
+      if(!changed.includes(i)){message('Need on ühesugused. Vaata veel!');return}
+      found.add(i);
+      for(const s of ['left','right'])get(s).children[i].classList.add('found');
+      if(found.size===changed.length)win();
+      else message('Üks veel!');
+    },'spot'));
+  }
+}
+home();
+</script></body></html>
